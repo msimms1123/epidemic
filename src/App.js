@@ -1,25 +1,34 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import TopBar from './components/TopBar.jsx'
+import InitialForm from './components/InitialForm'
+import GameMain from './containers/gamemain'
+
 import './App.css';
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 class App extends Component {
+  constructor(){
+    super();
+    this.state = {
+      initialConditions: null
+    };
+
+    this.setInitialCondition = this.setInitialCondition.bind(this)
+  }
+
+  setInitialCondition(initConds){
+    this.setState({initialConditions: initConds})
+  }
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div className="App"> 
+      <TopBar/>
+        <Router>
+          <div className="col s12 display-main">
+            <Route exact={true} path='/' render={(props) => (<InitialForm setinit={this.setInitialCondition} rout={props}/>)}/> 
+            <Route path='/game' render={(props) => (<GameMain initialConditions={this.state.initialConditions} rout={props}/>)}/> 
+          </div>
+        </Router>
       </div>
     );
   }

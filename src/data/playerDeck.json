@@ -1,0 +1,374 @@
+{
+    "Bejing": {
+        "deck":"player",
+        "type":"city",
+        "disease":"red",
+        "quantity":1,
+        "description":null
+    },
+    "Seoul": {
+        "deck":"player",
+        "type":"city",
+        "disease":"red",
+        "quantity":1,
+        "description":null
+    },
+    "Shanghai": {
+        "deck":"player",
+        "type":"city",
+        "disease":"red",
+        "quantity":1,
+        "description":null
+    },
+    "Tokyo": {
+        "deck":"player",
+        "type":"city",
+        "disease":"red",
+        "quantity":1,
+        "description":null
+    },
+    "Hong_Kong": {
+        "deck":"player",
+        "type":"city",
+        "disease":"red",
+        "quantity":1,
+        "description":null
+    },
+    "Taipei": {
+        "deck":"player",
+        "type":"city",
+        "disease":"red",
+        "quantity":1,
+        "description":null
+    },
+    "Osaka": {
+        "deck":"player",
+        "type":"city",
+        "disease":"red",
+        "quantity":1,
+        "description":null
+    },
+    "Bangkok": {
+        "deck":"player",
+        "type":"city",
+        "disease":"red",
+        "quantity":1,
+        "description":null
+    },
+    "Ho_Chi_Minh_City": {
+        "deck":"player",
+        "type":"city",
+        "disease":"red",
+        "quantity":1,
+        "description":null
+    },
+    "Manilla": {
+        "deck":"player",
+        "type":"city",
+        "disease":"red",
+        "quantity":1,
+        "description":null
+    },
+    "Jakarta": {
+        "deck":"player",
+        "type":"city",
+        "disease":"red",
+        "quantity":1,
+        "description":null
+    },
+    "Sydney": {
+        "deck":"player",
+        "type":"city",
+        "disease":"red",
+        "quantity":1,
+        "description":null
+    },
+    "Delhi": {
+        "deck":"player",
+        "type":"city",
+        "disease":"black",
+        "quantity":1,
+        "description":null
+    },
+    "Kolkata": {
+        "deck":"player",
+        "type":"city",
+        "disease":"black",
+        "quantity":1,
+        "description":null
+    },
+    "Chennai": {
+        "deck":"player",
+        "type":"city",
+        "disease":"black",
+        "quantity":1,
+        "description":null
+    },
+    "Mumbai": {
+        "deck":"player",
+        "type":"city",
+        "disease":"black",
+        "quantity":1,
+        "description":null
+    },
+    "Karachi": {
+        "deck":"player",
+        "type":"city",
+        "disease":"black",
+        "quantity":1,
+        "description":null
+    },
+    "Tehran": {
+        "deck":"player",
+        "type":"city",
+        "disease":"black",
+        "quantity":1,
+        "description":null
+    },
+    "Baghdad": {
+        "deck":"player",
+        "type":"city",
+        "disease":"black",
+        "quantity":1,
+        "description":null
+    },
+    "Riyadh": {
+        "deck":"player",
+        "type":"city",
+        "disease":"black",
+        "quantity":1,
+        "description":null
+    },
+    "Moscow": {
+        "deck":"player",
+        "type":"city",
+        "disease":"black",
+        "quantity":1,
+        "description":null
+    },
+    "Istanbul": {
+        "deck":"player",
+        "type":"city",
+        "disease":"black",
+        "quantity":1,
+        "description":null
+    },
+    "Cairo": {
+        "deck":"player",
+        "type":"city",
+        "disease":"black",
+        "quantity":1,
+        "description":null
+    },
+    "Algiers": {
+        "deck":"player",
+        "type":"city",
+        "disease":"black",
+        "quantity":1,
+        "description":null
+    },
+    "Khartoum": {
+        "deck":"player",
+        "type":"city",
+        "disease":"yellow",
+        "quantity":1,
+        "description":null
+    },
+    "Lagos": {
+        "deck":"player",
+        "type":"city",
+        "disease":"yellow",
+        "quantity":1,
+        "description":null
+    },
+    "Kinshasa": {
+        "deck":"player",
+        "type":"city",
+        "disease":"yellow",
+        "quantity":1,
+        "description":null
+    },
+    "Johannesburg": {
+        "deck":"player",
+        "type":"city",
+        "disease":"yellow",
+        "quantity":1,
+        "description":null
+    },
+    "Sao_Paulo": {
+        "deck":"player",
+        "type":"city",
+        "disease":"yellow",
+        "quantity":1,
+        "description":null
+    },
+    "Buenos_Aires": {
+        "deck":"player",
+        "type":"city",
+        "disease":"yellow",
+        "quantity":1,
+        "description":null
+    },
+    "Bogota": {
+        "deck":"player",
+        "type":"city",
+        "disease":"yellow",
+        "quantity":1,
+        "description":null
+    },
+    "Lima": {
+        "deck":"player",
+        "type":"city",
+        "disease":"yellow",
+        "quantity":1,
+        "description":null
+    },
+    "Santiago": {
+        "deck":"player",
+        "type":"city",
+        "disease":"yellow",
+        "quantity":1,
+        "description":null
+    },
+    "Miami": {
+        "deck":"player",
+        "type":"city",
+        "disease":"yellow",
+        "quantity":1,
+        "description":null
+    },
+    "Mexico_City": {
+        "deck":"player",
+        "type":"city",
+        "disease":"yellow",
+        "quantity":1,
+        "description":null
+    },
+    "Los_Angeles": {
+        "deck":"player",
+        "type":"city",
+        "disease":"yellow",
+        "quantity":1,
+        "description":null
+    },
+    "San_Francisco": {
+        "deck":"player",
+        "type":"city",
+        "disease":"blue",
+        "quantity":1,
+        "description":null
+    },
+    "Chicago": {
+        "deck":"player",
+        "type":"city",
+        "disease":"blue",
+        "quantity":1,
+        "description":null
+    },
+    "Atlanta": {
+        "deck":"player",
+        "type":"city",
+        "disease":"blue",
+        "quantity":1,
+        "description":null
+    },
+    "Montreal": {
+        "deck":"player",
+        "type":"city",
+        "disease":"blue",
+        "quantity":1,
+        "description":null
+    },
+    "Washington": {
+        "deck":"player",
+        "type":"city",
+        "disease":"blue",
+        "quantity":1,
+        "description":null
+    },
+    "New_York": {
+        "deck":"player",
+        "type":"city",
+        "disease":"blue",
+        "quantity":1,
+        "description":null
+    },
+    "London": {
+        "deck":"player",
+        "type":"city",
+        "disease":"blue",
+        "quantity":1,
+        "description":null
+    },
+    "Madrid": {
+        "deck":"player",
+        "type":"city",
+        "disease":"blue",
+        "quantity":1,
+        "description":null
+    },
+    "Essen": {
+        "deck":"player",
+        "type":"city",
+        "disease":"blue",
+        "quantity":1,
+        "description":null
+    },
+    "Paris": {
+        "deck":"player",
+        "type":"city",
+        "disease":"blue",
+        "quantity":1,
+        "description":null
+    },
+    "Milan": {
+        "deck":"player",
+        "type":"city",
+        "disease":"blue",
+        "quantity":1,
+        "description":null
+    },
+    "St_Petersburg": {
+        "deck":"player",
+        "type":"city",
+        "disease":"blue",
+        "quantity":1,
+        "description":null
+    },
+    "Epidemic":{
+        "deck":"player",
+        "type":"epidemic",
+        "quantity":6,
+        "description": "1-Increase: /n Move the infection rate marker forward 1 space. /n /n 2-Infect: /n Draw the bottom card from the infection deck and put 3 cubes on that city. Discard that card. /n /n 3-Intensify: /n Shuffle the cards in the infection discard pile and put them on top of the infection deck."
+    },
+    "Government_Grant":{
+        "deck":"player",
+        "type":"event",
+        "quantity":1,
+        "description": "Add 1 Research Station to any city (no city card needed)"
+    },
+    "Forecast":{
+        "deck":"player",
+        "type":"event",
+        "quantity":1,
+        "description": "Draw, look at, and rearrange the top 6 cards of the infection deck. Put them back on top."
+    },
+    "Airlift":{
+        "deck":"player",
+        "type":"event",
+        "quantity":1,
+        "description": "Move any 1 pawn to any city. Get permission before moving another players pawn."
+    },
+    "Resilient_Population":{
+        "deck":"player",
+        "type":"event",
+        "quantity":1,
+        "description": "Remove any 1 card in the infection discard pile from the game. You may play this between the Infect and Intensify steps of an Epidemic"
+    },
+    "One_Quiet_Night":{
+        "deck":"player",
+        "type":"event",
+        "quantity":1,
+        "description": "Skip the next infect cities step. (do not flip over any infection cards)"
+    }
+}
