@@ -16,7 +16,7 @@ class GameMain extends React.Component {
         */ 
     }
     render(){
-        if(!this.props.initialConditions){return ''}
+        //if(!this.props.initialConditions){return ''}
         return(
             <Row>
                 <Col s={2}>
@@ -24,9 +24,6 @@ class GameMain extends React.Component {
                 </Col>
                 <Col s={10}>
                     <GameCentral model={this.state.model}/>  
-                </Col>
-                <Col s={0}>
-                dfngoairngpndpmsdlmpcbmvdp
                 </Col>
             </Row>
         )

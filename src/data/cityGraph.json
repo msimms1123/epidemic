@@ -2,184 +2,184 @@
     "Bejing": {
         "disease":"red",
         "location": {
-            "x":50,
-            "y":50
+            "x":83,
+            "y":23
         },
         "connections": ["Shanghai", "Seoul"]        
     },
     "Seoul": {
         "disease":"red",
         "location": {
-            "x":50,
-            "y":50
+            "x":88,
+            "y":23
         },
         "connections": ["Shanghai", "Bejing", "Tokyo"]        
     },
     "Shanghai": {
         "disease":"red",
         "location": {
-            "x":50,
-            "y":50
+            "x":83,
+            "y":30
         },
         "connections": ["Bejing", "Seoul", "Tokyo", "Taipei", "Hong_Kong"]        
     },
     "Tokyo": {
         "disease":"red",
         "location": {
-            "x":50,
-            "y":50
+            "x":92,
+            "y":27
         },
         "connections": ["Shanghai", "Seoul","Osaka", "San_Francisco"]        
     },
     "Hong_Kong": {
         "disease":"red",
         "location": {
-            "x":50,
-            "y":50
+            "x":84,
+            "y":41
         },
-        "connections": ["Shanghai", "Taipei","Kolkata","Bangkok","Ho_Chi_Minh_City","Manilla"]        
+        "connections": ["Shanghai", "Taipei","Kolkata","Bangkok","Ho_Chi_Minh_City","Manila"]        
     },
     "Taipei": {
         "disease":"red",
         "location": {
-            "x":50,
-            "y":50
+            "x":90,
+            "y":42
         },
-        "connections": ["Shanghai", "Osaka", "Hong_Kong","Manilla"]        
+        "connections": ["Shanghai", "Osaka", "Hong_Kong","Manila"]        
     },
     "Osaka": {
         "disease":"red",
         "location": {
-            "x":50,
-            "y":50
+            "x":93,
+            "y":37
         },
         "connections": ["Tokyo", "Taipei"]        
     },
     "Bangkok": {
         "disease":"red",
         "location": {
-            "x":50,
-            "y":50
+            "x":81,
+            "y":47
         },
         "connections": ["Kolkata", "Chennai", "Jakarta", "Ho_Chi_Minh_City", "Hong_Kong"]        
     },
     "Ho_Chi_Minh_City": {
         "disease":"red",
         "location": {
-            "x":50,
-            "y":50
+            "x":86,
+            "y":55
         },
-        "connections": ["Hong_Kong", "Bangkok", "Jakarta", "Manilla"]        
+        "connections": ["Hong_Kong", "Bangkok", "Jakarta", "Manila"]        
     },
-    "Manilla": {
+    "Manila": {
         "disease":"red",
         "location": {
-            "x":50,
-            "y":50
+            "x":92,
+            "y":55
         },
         "connections": ["Taipei", "Hong_Kong", "Ho_Chi_Minh_City","Sydney","San_Francisco"]        
     },
     "Jakarta": {
         "disease":"red",
         "location": {
-            "x":50,
-            "y":50
+            "x":80,
+            "y":60
         },
         "connections": ["Bangkok", "Chennai", "Sydney", "Ho_Chi_Minh_City"]        
     },
     "Sydney": {
         "disease":"red",
         "location": {
-            "x":50,
-            "y":50
+            "x":93,
+            "y":77
         },
-        "connections": ["Los_Angeles", "Manilla", "Jakarta"]        
+        "connections": ["Los_Angeles", "Manila", "Jakarta"]        
     },
     "Delhi": {
         "disease":"black",
         "location": {
-            "x":50,
-            "y":50
+            "x":75,
+            "y":31
         },
         "connections": ["Tehran", "Karachi", "Mumbai", "Chennai", "Kolkata"]        
     },
     "Kolkata": {
         "disease":"black",
         "location": {
-            "x":50,
-            "y":50
+            "x":79,
+            "y":36
         },
         "connections": ["Delhi", "Hong_Kong", "Bangkok", "Chennai"]        
     },
     "Chennai": {
         "disease":"black",
         "location": {
-            "x":50,
-            "y":50
+            "x":75,
+            "y":48
         },
         "connections": ["Mumbai","Delhi","Kolkata","Bangkok","Jakarta"]        
     },
     "Mumbai": {
         "disease":"black",
         "location": {
-            "x":50,
-            "y":50
+            "x":70,
+            "y":44
         },
         "connections": ["Karachi","Delhi","Chennai"]        
     },
     "Karachi": {
         "disease":"black",
         "location": {
-            "x":50,
-            "y":50
+            "x":69,
+            "y":38
         },
         "connections": ["Tehran","Baghdad","Riyadh","Delhi","Mumbai"]        
     },
     "Tehran": {
         "disease":"black",
         "location": {
-            "x":50,
-            "y":50
+            "x":67,
+            "y":27
         },
         "connections": ["Moscow","Baghdad","Karachi","Delhi"]        
     },
     "Baghdad": {
         "disease":"black",
         "location": {
-            "x":50,
-            "y":50
+            "x":61,
+            "y":34
         },
         "connections": ["Istanbul","Cairo","Riyadh","Karachi","Tehran"]        
     },
     "Riyadh": {
         "disease":"black",
         "location": {
-            "x":50,
-            "y":50
+            "x":63,
+            "y":44  
         },
         "connections": ["Cairo","Baghdad","Karachi"]        
     },
     "Moscow": {
         "disease":"black",
         "location": {
-            "x":50,
-            "y":50
+            "x":62,
+            "y":23
         },
         "connections": ["St_Petersburg","Istanbul","Tehran"]        
     },
     "Istanbul": {
         "disease":"black",
         "location": {
-            "x":50,
-            "y":50
+            "x":56,
+            "y":28
         },
         "connections": ["St_Petersburg","Milan","Moscow","Cairo","Algiers","Baghdad"]        
     },
     "Cairo": {
         "disease":"black",
         "location": {
-            "x":50,
-            "y":50
+            "x":56,
+            "y":36
         },
         "connections": ["Istanbul","Baghdad","Riyadh","Khartoum","Algiers"]        
     },
@@ -187,22 +187,22 @@
         "disease":"black",
         "location": {
             "x":50,
-            "y":50
+            "y":35
         },
         "connections": ["Istanbul","Cairo","Paris","Madrid"]        
     },
     "Khartoum": {
         "disease":"yellow",
         "location": {
-            "x":50,
-            "y":50
+            "x":58,
+            "y":49
         },
         "connections": ["Cairo", "Lagos","Kinshasa","Johannesburg"]        
     },
     "Lagos": {
         "disease":"yellow",
         "location": {
-            "x":50,
+            "x":48,
             "y":50
         },
         "connections": ["Sao_Paulo","Khartoum","Kinshasa"]        
@@ -210,152 +210,152 @@
     "Kinshasa": {
         "disease":"yellow",
         "location": {
-            "x":50,
-            "y":50
+            "x":53,
+            "y":60
         },
         "connections": ["Lagos","Khartoum","Johannesburg"]        
     },
     "Johannesburg": {
         "disease":"yellow",
         "location": {
-            "x":50,
-            "y":50
+            "x":56,
+            "y":74
         },
         "connections": ["Khartoum","Kinshasa"]        
     },
     "Sao_Paulo": {
         "disease":"yellow",
         "location": {
-            "x":50,
-            "y":50
+            "x":33,
+            "y":68
         },
         "connections": ["Madrid","Lagos","Bogota","Buenos_Aires"]        
     },
     "Buenos_Aires": {
         "disease":"yellow",
         "location": {
-            "x":50,
-            "y":50
+            "x":30,
+            "y":78
         },
         "connections": ["Bogota","Sao_Paulo"]        
     },
     "Bogota": {
         "disease":"yellow",
         "location": {
-            "x":50,
-            "y":50
+            "x":23,
+            "y":52
         },
         "connections": ["Mexico_City","Miami","Lima","Sao_Paulo","Buenos_Aires"]        
     },
     "Lima": {
         "disease":"yellow",
         "location": {
-            "x":50,
-            "y":50
+            "x":19,
+            "y":67
         },
         "connections": ["Mexico_City","Bogota","Santiago"]        
     },
     "Santiago": {
         "disease":"yellow",
         "location": {
-            "x":50,
-            "y":50
+            "x":21,
+            "y":80
         },
         "connections": ["Lima"]        
     },
     "Miami": {
         "disease":"yellow",
         "location": {
-            "x":50,
-            "y":50
+            "x":23,
+            "y":41
         },
         "connections": ["Washington","Atlanta","Mexico_City","Bogota"]        
     },
     "Mexico_City": {
         "disease":"yellow",
         "location": {
-            "x":50,
-            "y":50
+            "x":15,
+            "y":42
         },
         "connections": ["Los_Angeles","Chicago","Miami","Bogota","Lima"]        
     },
     "Los_Angeles": {
         "disease":"yellow",
         "location": {
-            "x":50,
-            "y":50
+            "x":8,
+            "y":35
         },
         "connections": ["San_Francisco","Sydney","Mexico_City","Chicago"]        
     },
     "San_Francisco": {
         "disease":"blue",
         "location": {
-            "x":50,
-            "y":50
+            "x":11,
+            "y":27
         },
-        "connections": ["Tokyo","Milan","Los_Angeles","Chicago"]        
+        "connections": ["Tokyo","Manila","Los_Angeles","Chicago"]        
     },
     "Chicago": {
         "disease":"blue",
         "location": {
-            "x":50,
-            "y":50
+            "x":20,
+            "y":25
         },
         "connections": ["San_Francisco","Los_Angeles","Mexico_City","Atlanta","Montreal"]        
     },
     "Atlanta": {
         "disease":"blue",
         "location": {
-            "x":50,
-            "y":50
+            "x":21,
+            "y":32
         },
         "connections": ["Chicago","Miami","Washington"]        
     },
     "Montreal": {
         "disease":"blue",
         "location": {
-            "x":50,
-            "y":50
+            "x":27,
+            "y":24
         },
         "connections": ["Chicago","Washington","New_York"]        
     },
     "Washington": {
         "disease":"blue",
         "location": {
-            "x":50,
-            "y":50
+            "x":27,
+            "y":31
         },
         "connections": ["New_York","Montreal","Atlanta","Miami"]        
     },
     "New_York": {
         "disease":"blue",
         "location": {
-            "x":50,
-            "y":50
+            "x":32,
+            "y":27
         },
         "connections": ["London","Madrid","Montreal","Washington"]        
     },
     "London": {
         "disease":"blue",
         "location": {
-            "x":50,
-            "y":50
+            "x":45,
+            "y":19
         },
         "connections": ["Essen","Paris","Madrid","New_York"]        
     },
     "Madrid": {
         "disease":"blue",
         "location": {
-            "x":50,
-            "y":50
+            "x":42,
+            "y":28
         },
         "connections": ["London","New_York","Sao_Paulo","Algiers","Paris"]        
     },
     "Essen": {
         "disease":"blue",
         "location": {
-            "x":50,
-            "y":50
+            "x":51,
+            "y":17
         },
         "connections": ["London","Paris","Milan","St_Petersburg"]        
     },
@@ -363,23 +363,23 @@
         "disease":"blue",
         "location": {
             "x":50,
-            "y":50
+            "y":24
         },
         "connections": ["Essen","London","Madrid","Algiers","Milan"]        
     },
     "Milan": {
         "disease":"blue",
         "location": {
-            "x":50,
-            "y":50
+            "x":55,
+            "y":22
         },
         "connections": ["Essen","Paris","Istanbul"]        
     },
     "St_Petersburg": {
         "disease":"blue",
         "location": {
-            "x":50,
-            "y":50
+            "x":57,
+            "y":16
         },
         "connections": ["Moscow","Istanbul","Essen"]        
     }

@@ -1,10 +1,14 @@
 import {Navbar,NavItem,Icon,Dropdown,Button} from 'react-materialize'
 import React from 'react'
 
-const TopBar = ({}) => (
-    <div>
-        <Navbar brand='logo' right>
-            <NavItem href='get-started.html'><Icon>book</Icon></NavItem>
+const TopBar = ({openRules}) => (
+    <div className='nav-container'>
+        <Navbar brand='EPIDEMIC' right>
+            <NavItem 
+            onClick={(e)=>{
+                e.preventDefault();
+                openRules();
+            }}><Icon>book</Icon></NavItem>
             
             <Dropdown trigger={  
                 <NavItem><Icon>settings</Icon></NavItem>

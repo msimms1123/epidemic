@@ -1,9 +1,11 @@
 body{
   height: 100vh;
   background: rgb(149,149,149); /* Old browsers */
-  background: -moz-linear-gradient(-45deg, rgba(149,149,149,1) 0%, rgba(13,13,13,1) 42%, rgba(1,1,1,1) 39%, rgba(10,10,10,1) 42%, rgba(78,78,78,1) 76%, rgba(56,56,56,1) 78%, rgba(27,27,27,1) 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(-45deg, rgba(149,149,149,1) 0%,rgba(13,13,13,1) 42%,rgba(1,1,1,1) 39%,rgba(10,10,10,1) 42%,rgba(78,78,78,1) 76%,rgba(56,56,56,1) 78%,rgba(27,27,27,1) 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(135deg, rgba(149,149,149,1) 0%,rgba(13,13,13,1) 42%,rgba(1,1,1,1) 39%,rgba(10,10,10,1) 42%,rgba(78,78,78,1) 76%,rgba(56,56,56,1) 78%,rgba(27,27,27,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  background:
+  -moz-linear-gradient(-45deg, rgba(100,200,100,1) 0%,rgba(13,13,13,1) 42%,rgba(1,1,1,1) 39%,rgba(10,10,10,1) 42%,rgba(50,100,50,1) 76%,rgba(40,80,40,1) 78%,rgba(20,40,20,1) 100%); /* FF3.6-15 */
+  background:
+  -webkit-linear-gradient(-45deg, rgba(100,200,100,1) 0%,rgba(13,13,13,1) 42%,rgba(1,1,1,1) 39%,rgba(10,10,10,1) 42%,rgba(50,100,50,1) 76%,rgba(40,80,40,1) 78%,rgba(20,40,20,1) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(135deg, rgba(100,200,100,1) 0%,rgba(13,13,13,1) 42%,rgba(1,1,1,1) 39%,rgba(10,10,10,1) 42%,rgba(50,100,50,1) 76%,rgba(40,80,40,1) 78%,rgba(20,40,20,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#959595', endColorstr='#1b1b1b',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 h2{
@@ -12,6 +14,9 @@ h2{
   font-size: 2.5em;
   color:white;
   margin: 0;
+}
+.nav-container{
+  z-index: 99;
 }
 .init-form-container{
   padding: 15px;
@@ -44,18 +49,98 @@ h2{
   padding: 5px 0px;
   height:3.5em; 
 }
+.svg-container{
+  width: 100%;
+  height: 100vh;
+  position: relative;
+}
 .svg-main{
-  background: url('./images/Simple_world_map.svg');
+  background:rgba(0,0,0,.5);
+  background-image:url('./images/Simple_world_map.svg'); 
   width: 100%;
   height: 100vh;
   background-repeat: no-repeat;
   background-size: 83.33vw;
+  border-left: 2px solid white;
 }
 nav{
   background-color: inherit;
   position: absolute;
+  z-index: 9999;
   opacity:0;
 }
 nav:hover{
   opacity:1;
-}
+ }
+ .small{
+   font-size: 1.2px;
+ }
+ .medium{
+   font-size:2px;
+ }
+ nav .brand-logo{
+   background: radial-gradient(white, rgba(255,255,255,0)  70%);
+   font-weight: 700;
+   color:#251;
+   padding:0 30px;
+ }
+ .row{
+   margin:0;
+ }
+ .city-block{
+   position: absolute;
+   width: 3%;
+   background-color: rgba(255,255,255,.5);
+   overflow: hidden;
+ }
+ .modal-container{
+   position: absolute;
+   width: 100%;
+   height: 100vh;
+   background: rgba(0,0,0,.5);
+   z-index: 9999999999;
+ }
+ .content-outer-container{
+   box-sizing: border-box;
+   margin:0 25% 0 25%;
+   width:50%;
+   height: 100vh;
+   background: rgb(30,60,30);
+   border: 3px solid white;
+   border-radius: 15px;  
+   overflow-y: scroll;
+ }
+ .rule-header{
+   padding: 5px;
+   border-bottom: 1px solid white;
+ }
+ .rule-header h2{
+   display: inline-block;
+   width:auto;
+ }
+ .turn-page{
+   float: right;
+ }
+ .turn-page .material-icons{
+  font-size: 2.5em;
+  color:white;
+ }
+ .material-icons:hover{
+   cursor: pointer;
+   color:yellow;
+ }
+ article{
+   padding: 10px;
+ }
+ h3, h4 {
+   color:white;
+ }
+ p{
+   font-size:small;
+ }
+ h4{
+   font-size: medium;
+ }
+ h3{
+   font-size: 2em;
+ }
