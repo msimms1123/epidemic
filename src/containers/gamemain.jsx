@@ -1,6 +1,7 @@
 import React from 'react'
 import {Col, Row} from 'react-materialize'
 import GameCentral from './GameCentral'
+import GameLeft from './GameLeft'
 
 class GameMain extends React.Component {
     constructor(){
@@ -20,7 +21,7 @@ class GameMain extends React.Component {
         return(
             <Row>
                 <Col s={2}>
-                dfngoairngpndpmsdlmpcbmvdp
+                   <GameLeft/>
                 </Col>
                 <Col s={10}>
                     <GameCentral model={this.state.model}/>  
