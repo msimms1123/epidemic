@@ -52,9 +52,9 @@ tf.test('Infect cities with default disease', () => {
   tf.compare(city3.getDiseaseCount(), 0);
 
   world
-    .infect(city1)
-    .infect(city2)
-    .infect(city3);
+    ._infect(city1)
+    ._infect(city2)
+    ._infect(city3);
 
   tf.compare(city1.getDiseaseCount(), 1);
   tf.compare(city2.getDiseaseCount(), 1);
@@ -64,10 +64,10 @@ tf.test('Infect cities with default disease', () => {
 
 tf.test('Cause outbreak in city', () => {
   world
-    .infect(city1)
-    .infect(city1);
+    ._infect(city1)
+    ._infect(city1);
   tf.compare(city1.getDiseaseCount(), 3);
-  world.infect(city1);
+  world._infect(city1);
   let disease = city1.coreDisease;
   tf.compare(city1.getDiseaseCount(disease), 3);
   tf.compare(city2.getDiseaseCount(disease), 1);
@@ -86,15 +86,15 @@ tf.test('Treat disease in city', () => {
 
 tf.test('Chain outbreak', () => {
   let disease = city1.coreDisease;
-  world.infect(city2, disease);
-  world.infect(city2, disease);
+  world._infect(city2, disease);
+  world._infect(city2, disease);
   tf.compare(city1.getDiseaseCount(disease), 3);
   tf.compare(city2.getDiseaseCount(disease), 3);
   tf.compare(city3.getDiseaseCount(disease), 0);
   tf.compare(city4.getDiseaseCount(disease), 0);
   tf.compare(world.getDiseaseCount(disease), 6);
 
-  world.infect(city2, disease);
+  world._infect(city2, disease);
 
   tf.compare(city1.getDiseaseCount(disease), 3);
   tf.compare(city2.getDiseaseCount(disease), 3);
@@ -113,8 +113,8 @@ tf.test('Should revert q', () => {
   tf.compare(world.getDiseaseCount(disease), 8);
   tf.compare(world.getOutbreakCount(), 3);
 
-  world.infect(city3, disease);
-  world.infect(city3, disease);
+  world._infect(city3, disease);
+  world._infect(city3, disease);
   tf.compare(city1.getDiseaseCount(disease), 3);
   tf.compare(city2.getDiseaseCount(disease), 3);
   tf.compare(city3.getDiseaseCount(disease), 3);

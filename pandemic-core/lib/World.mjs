@@ -10,6 +10,7 @@ class World {
     this.cured = {};
     this.agents = {};
     this.outbreakCount = 0;
+    this.infectionRateCounter = 0;
     this.infectionDeck = infectionDeck || new Deck();
     this.infectionDiscard = infectionDiscard || new Deck();
     this.playerDeck = playerDeck || new Deck();
@@ -41,7 +42,7 @@ class World {
     return this.cities[cityName];
   }
 
-  infect(city, disease, outbreakSet) {
+  _infect(city, disease, outbreakSet) {
     if (this.isQuarantined(city)) {
       return this;
     }
@@ -51,7 +52,7 @@ class World {
       this.applyEvent(new events.Outbreak(disease, city));
       outbreakSet[city.name] = true;
       city.connections.map((c) => {
-        this.infect(c, disease, outbreakSet);
+        this._infect(c, disease, outbreakSet);
       });
     } else if (city.getDiseaseCount(disease) < 3) {
       this.applyEvent(new events.Infect(disease, city));
@@ -59,10 +60,26 @@ class World {
     return this;
   }
 
+  getInfectionRate() {
+    return constants.infectionRateValues[this.infectionRateCounter];
+  }
+
+  infect() {
+    const infectionCount = this.getInfectionRate();
+    for (let i=0; i<infectionCount; i++) {
+      let targetCard = this.infectionDeck.drawCardTop();
+      this.saveEvent(new events.Discard(targetCard, this.infectionDeck, this.infectionDeck.count()));
+      this.applyEvent(new events.Insert(targetCard, this.infectionDiscard, this.infectionDiscard.count()));
+      const targetCity = this.getCity(targetCard.name);
+      const disease = targetCity.coreDisease;
+      this._infect(targetCity, disease);
+    }
+  }
+
   epidemic() {
     let targetCard = this.infectionDeck.drawCardBottom();
-    this.saveEvent(new Discard(targetCard, this.infectionDeck, 0));
-    this.applyEvent(new Insert(targetCard, this.infectionDiscard, this.infectionDiscard.count()));
+    this.saveEvent(new events.Discard(targetCard, this.infectionDeck, 0));
+    this.applyEvent(new events.Insert(targetCard, this.infectionDiscard, this.infectionDiscard.count()));
     let targetCity = this.getCity(targetCard.name);
     let disease = targetCity.coreDisease;
     this.applyEvent(new events.Epidemic(disease, targetCity));
@@ -72,9 +89,9 @@ class World {
       //   outbreaks will only occur if city is not in outbreak set.
       const outbreakSet = {};
       outbreakSet[targetCity.name] = true;
-      this.infect(targetCity, disease, outbreakSet); // No outbreak
-      this.infect(targetCity, disease, outbreakSet); // No outbreak
-      this.infect(targetCity, disease); // Allow outbreak on final infection
+      this._infect(targetCity, disease, outbreakSet); // No outbreak
+      this._infect(targetCity, disease, outbreakSet); // No outbreak
+      this._infect(targetCity, disease); // Allow outbreak on final infection
     }
     this.intensify();
     return targetCity;
@@ -247,6 +264,24 @@ class World {
       count += city.getDiseaseCount(disease);
     }
     return count;
+  }
+
+  getAllDiseaseCounts() {
+    const diseases = {};
+    for (let cityName in this.cities) {
+      let c = this.cities[cityName];
+      let ds = c.getDiseases();
+      for (let i=0; i<ds.length; i++) {
+        let d = ds[i];
+        let count = c.getDiseaseCount(d);
+        if (!diseases[d]) {
+          diseases[d] = count;
+        } else {
+          diseases[d] += count;
+        }
+      }
+    }
+    return diseases;
   }
 
   getOutbreakCount() {

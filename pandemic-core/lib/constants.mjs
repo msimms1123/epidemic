@@ -4,19 +4,6 @@ const constants = {
     EVENT: 'event',
     EPIDEMIC: 'epidemic'
   },
-  actions: {
-    MOVE: 'move',
-    BUILD: 'build',
-    DISMANTLE: 'dismantle',
-    TREAT: 'treat',
-    INFECT: 'infect',
-    CURE: 'cure',
-    REVERSE_CURE: 'reverse_cure',
-    DISCARD: 'discard',
-    INSERT: 'insert',
-    EVENT: 'event',
-    INFECT: 'infect'
-  },
   moves: {
     LOCAL: 'local',
     DIRECT: 'direct',
@@ -48,6 +35,8 @@ const constants = {
     4
   ],
   MAX_CARDS: 7,
+  MAX_DISEASE_COUNT: 24,
+  MAX_OUTBREAKS: 7,
   loss_conditions: {
     OUTBREAK_COUNTER: 'outbreak_counter',
     DISEASE_COUNT: 'disease_count',

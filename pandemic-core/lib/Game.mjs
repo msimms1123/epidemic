@@ -8,10 +8,7 @@ class Game {
   constructor(world, agents, infectionDeck, playerDeck, controller, turn) {
     this.world = world;
     this.agents = agents;
-    this.infectionDeck = infectionDeck || new Deck();
-    this.playerDeck = playerDeck || new Deck();
     this.controller = controller;
-    this.infectionRateCounter = 0;
     this.turn = turn || 0;
   }
 
@@ -23,6 +20,16 @@ class Game {
   setController(controller) {
     this.controller = controller;
     return this;
+  }
+
+  async play(turnCallback) {
+    let agentIndex = 0;
+    while(!this.done) {
+      let agent = this.agents[agentIndex];
+      await turn(agent);
+      agentIndex = agentIndex + 1 % this.agents.length;
+      await turnCallback(this);
+    }
   }
 
   async turn(agent) {
@@ -37,7 +44,7 @@ class Game {
 
   async doActions(agent) {
     await this.controller._doActions(agent, this.world);
-    this.done = this.isFinalState();
+    await this.checkFinalState();
   }
 
   async drawPlayerCards(agent) {
@@ -53,6 +60,7 @@ class Game {
         this.world.addCardToAgent(cards[i], agent);
       }
     }
+    await this.checkFinalState();
   }
 
   async discard(agent) {
@@ -61,8 +69,46 @@ class Game {
     }
   }
 
-  infectCities() {
-    
+  async infectCities() {
+    this.world.infect();
+    await this.checkFinalState();
+  }
+
+  async checkFinalState() {
+    // Check for win
+    await this.checkWin();
+    if (!this.done) {
+      await this.checkLose();
+    }
+  }
+
+  async checkWin() {
+    let cureCount = 0;
+    for (let c in this.world.cured) {
+      if (this.world.cured[c]) {
+        cureCount++;
+      }
+    }
+    if (cureCount === 4) {
+      this.done = true;
+      await this.controller._win(this.world, constants.win_conditions.ALL_CURES);
+    }
+  }
+
+  async checkLose() {
+    let diseases = this.world.getAllDiseaseCounts();
+    for (let d in diseases) {
+      if (diseases[d] > constants.MAX_DISEASE_COUNT) {
+        this.done = true;
+        await this.controller._lose(this.world, constants.loss_conditions.DISEASE_COUNT);
+        return;
+      }
+    }
+    if (this.world.getOutbreakCount() > constants.MAX_OUTBREAKS) {
+      this.done = true;
+      await this.controller._lose(this.world, constants.loss_conditions.OUTBREAK_COUNTER);
+      return;
+    }
   }
 }
 
