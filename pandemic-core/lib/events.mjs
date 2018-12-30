@@ -189,6 +189,68 @@ class Insert extends Event {
   }
 }
 
+class Epidemic extends Event {
+  constructor(disease, targetCity) {
+    super();
+    this.disease = disease;
+    this.targetCity = targetCity;
+  }
+
+  apply(world) {
+    world.infectionRateCounter++;
+  }
+
+  invert() {
+    return new ClearEpidemic(this.disease, this.targetCity);
+  }
+}
+
+class ClearEpidemic extends Event {
+  constructor(disease, targetCity) {
+    super();
+    this.disease = disease;
+    this.targetCity = targetCity;
+  }
+
+  apply(world) {
+    world.infectionRateCounter--;
+  }
+
+  invert() {
+    return new Epidemic(this.disease, this.targetCity);
+  }
+}
+
+class SetDeck extends Event {
+  constructor(target, oldDeck, newDeck) {
+    super();
+    this.target = target;
+    this.oldDeck = oldDeck;
+    this.newDeck = newDeck;
+  }
+
+  apply(world) {
+    world._setDeck(this.target, this.newDeck);
+  }
+
+  invert() {
+    return new SetDeck(this.target, this.newDeck, this.oldDeck);
+  }  
+}
+
+// To invert informational events (i.e. events that have no world impact)
+class NoOp extends Event {
+  constructor() {}
+
+  apply(world) {
+    // Do Nothing
+  }
+
+  invert() {
+    return new NoOp();
+  }
+}
+
 const events = {
   Move,
   Build,
@@ -200,7 +262,8 @@ const events = {
   Cure,
   ReverseCure,
   Discard,
-  Insert
+  Insert,
+  NoOp
 };
 
 export default events;

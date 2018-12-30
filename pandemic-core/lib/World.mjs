@@ -5,13 +5,15 @@ import events from './events';
 
 class World {
 
-  constructor(cities, diseases, infectionDeck, playerDeck, eventQ) {
+  constructor(cities, infectionDeck, playerDeck, infectionDiscard, playerDiscard, eventQ) {
     this.cities = cities || {};
     this.cured = {};
     this.agents = {};
     this.outbreakCount = 0;
     this.infectionDeck = infectionDeck || new Deck();
+    this.infectionDiscard = infectionDiscard || new Deck();
     this.playerDeck = playerDeck || new Deck();
+    this.playerDiscard = playerDiscard || new Deck();
     this.eventQ = eventQ || [];
   }
 
@@ -55,6 +57,39 @@ class World {
       this.applyEvent(new events.Infect(disease, city));
     }
     return this;
+  }
+
+  epidemic() {
+    let targetCard = this.infectionDeck.drawCardBottom();
+    this.saveEvent(new Discard(targetCard, this.infectionDeck, 0));
+    this.applyEvent(new Insert(targetCard, this.infectionDiscard, this.infectionDiscard.count()));
+    let targetCity = this.getCity(targetCard.name);
+    let disease = targetCity.coreDisease;
+    this.applyEvent(new events.Epidemic(disease, targetCity));
+    if (!this.cured[disease]) {
+      // Take advantage of the outbreakSet to limit to a single outbreak;
+      //   Infection will never increase the disease count above 3, and
+      //   outbreaks will only occur if city is not in outbreak set.
+      const outbreakSet = {};
+      outbreakSet[targetCity.name] = true;
+      this.infect(targetCity, disease, outbreakSet); // No outbreak
+      this.infect(targetCity, disease, outbreakSet); // No outbreak
+      this.infect(targetCity, disease); // Allow outbreak on final infection
+    }
+    this.intensify();
+    return targetCity;
+  }
+
+  intensify() {
+    const newDiscard = new Deck();
+    const discardClone = this.infectionDiscard.clone();
+    discardClone.shuffle();
+    const count = discardClone.count();
+    for (let i=0; i<count; i++) {
+      let c = discardClone.getCardAtIndex(i);
+      this.applyEvent(new events.Insert(c, this.infectionDeck, this.infectionDeck.count()));
+    }
+    this.applyEvent(new events.SetDeck(constants.decks.INFECTION_DISCARD, this.infectionDiscard, newDiscard));
   }
   
   move(agent, moveType, sourceCity, targetCity) {
@@ -119,6 +154,7 @@ class World {
     let card = hand.getCard(cardName);
     let index = hand.getCardIndex(cardName);
     this.applyEvent(new events.Discard(card, hand, index));
+    this.applyEvent(new events.Insert(card, this.playerDiscard, this.playerDiscard.count()));
     return this;
   }
 
@@ -129,6 +165,19 @@ class World {
     return this;
   }
 
+  drawPlayerCards(n) {
+    let cards = [];
+    for (let i=0; i<n; i++) {
+      let index = this.playerDeck.count() - 1;
+      let c = this.playerDeck.drawCardTop();
+      if (c) {
+        this.saveEvent(new events.Discard(c, this.playerDeck, index));
+        cards.push(c);
+      }
+    }
+    return cards;
+  }
+
   _cure(disease) {
     this.cured[disease] = true;
     return this;
@@ -137,6 +186,25 @@ class World {
   _reverseCure(disease) {
     delete this.cured[disease];
     return this;
+  }
+
+  _setDeck(target, deck) {
+    switch (target) {
+    case constants.decks.PLAYER:
+      this.playerDeck = deck;
+      break;
+    case constants.decks.INFECTION:
+      this.infectionDeck = deck;
+      break;
+    case constants.decks.PLAYER_DISCARD:
+      this.playerDiscard = deck;
+      break;
+    case constants.decks.INFECTION_DISCARD:
+      this.infectionDiscard = deck;
+      break;
+    default:
+      throw new Error(`Unknown deck "${target}"`);
+    }
   }
 
   isCured(disease) {
@@ -194,6 +262,10 @@ class World {
     this.eventQ.push(event);
   }
 
+  saveEvent(event) {
+    this.eventQ.push(event);
+  }
+
   revertEventQ(qIndex) {
     for (let i=this.eventQ.length; i>qIndex; i--) {
       let event = this.eventQ.pop();
@@ -231,7 +303,7 @@ class World {
         city.addConnection(c);
       }
     }
-    const world = new World(cities, diseases);
+    const world = new World(cities);
     return world;
   }
 }

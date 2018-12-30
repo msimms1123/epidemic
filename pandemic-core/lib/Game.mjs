@@ -27,28 +27,42 @@ class Game {
 
   async turn(agent) {
     await this.doActions(agent);
+    if (this.done) return;
     await this.drawPlayerCards(agent);
+    if (this.done) return;
     await this.discard(agent);
+    if (this.done) return;
     this.infectCities();
   }
 
   async doActions(agent) {
     await this.controller._doActions(agent, this.world);
+    this.done = this.isFinalState();
   }
 
-  drawPlayerCards(agent) {
-    
-  }
-
-  infectCities() {
-    
+  async drawPlayerCards(agent) {
+    const cards = this.world.drawPlayerCards(2);
+    if (cards.length < 2) {
+      return await controller._lose(this.world, constants.loss_conditions.NO_PLAYER_CARDS);
+    }
+    for (let i=0; i<cards.length; i++) {
+      if (cards[i].type === constants.cards.EPIDEMIC) {
+        let location = this.world.epidemic();
+        await this.controller._epidemic(agent, this.world, location);
+      } else {
+        this.world.addCardToAgent(cards[i], agent);
+      }
+    }
   }
 
   async discard(agent) {
     while (agent.cards.count() > constants.MAX_CARDS) {
-      let actions = await this.controller._discard(agent, this.world);
-      this.executeActions(actions);
+      await this.controller._discard(agent, this.world);
     }
+  }
+
+  infectCities() {
+    
   }
 }
 

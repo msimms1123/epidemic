@@ -38,13 +38,17 @@ class Deck {
 
   drawCardTop() {
     const c = this.cards.pop();
-    delete this.cardMap[c.name];
+    if (c) {
+      delete this.cardMap[c.name];
+    }
     return c;
   }
 
   drawCardBottom() {
     const c = this.cards.shift();
-    delete this.cardMap[c.name];
+    if (c) {
+      delete this.cardMap[c.name];
+    }
     return c;
   }
 

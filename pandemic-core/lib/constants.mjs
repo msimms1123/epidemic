@@ -1,7 +1,8 @@
 const constants = {
   cards: {
     LOCATION: 'location',
-    EVENT: 'event'
+    EVENT: 'event',
+    EPIDEMIC: 'epidemic'
   },
   actions: {
     MOVE: 'move',
@@ -22,6 +23,12 @@ const constants = {
     CHARTER: 'charter',
     SHUTTLE: 'shuttle'
   },
+  decks: {
+    PLAYER: 'player',
+    INFECTION: 'infection',
+    PLAYER_DISCARD: 'player_discard',
+    INFECTION_DISCARD: 'infection_discard'
+  },
   agents: {
     CONTINGENCY_PLANNER: 'contingency_planner',
     DISPATCHER: 'dispatcher',
@@ -40,7 +47,15 @@ const constants = {
     4,
     4
   ],
-  MAX_CARDS: 7
+  MAX_CARDS: 7,
+  loss_conditions: {
+    OUTBREAK_COUNTER: 'outbreak_counter',
+    DISEASE_COUNT: 'disease_count',
+    NO_PLAYER_CARDS: 'no_player_cards'
+  },
+  win_conditions: {
+    ALL_CURES: 'all_cures'
+  }
 };
 
 export default constants;
