@@ -40,6 +40,9 @@ class World {
   }
 
   infect(city, disease, outbreakSet) {
+    if (this.isQuarantined(city)) {
+      return this;
+    }
     disease = disease || city.coreDisease;
     outbreakSet = outbreakSet || {};
     if (city.getDiseaseCount(disease) >= 3 && !outbreakSet[city.name]) {
@@ -126,6 +129,17 @@ class World {
 
   isCured(disease) {
     return this.cured[disease];
+  }
+
+  isQuarantined(city) {
+    let qAgent = this.agents[constants.agents.QUARANTINE_SPECIALIST];
+    if (qAgent) {
+      const qCity = qAgent.getLocation().name;
+      if (city.name === qCity || city.getConnection(qCity)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   getConnections(cityName) {
