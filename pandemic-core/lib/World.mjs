@@ -100,6 +100,11 @@ class World {
     return this;
   }
 
+  trade(sourceAgent, targetAgent, card) {
+    this.removeCardFromAgent(card.name, sourceAgent);
+    this.addCardToAgent(card, targetAgent);
+  }
+
   clear(city, disease) {
     disease = disease || city.coreDisease;
     const count = city.getDiseaseCount(disease);
@@ -114,6 +119,13 @@ class World {
     let card = hand.getCard(cardName);
     let index = hand.getCardIndex(cardName);
     this.applyEvent(new events.Discard(card, hand, index));
+    return this;
+  }
+
+  addCardToAgent(card, agent) {
+    let hand = agent.getHand();
+    let index = hand.count();
+    this.applyEvent(new events.Insert(card, hand, index));
     return this;
   }
 

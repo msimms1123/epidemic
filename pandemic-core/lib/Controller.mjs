@@ -154,7 +154,7 @@ class Controller {
 
   doDiscoverCure(disease, cards) {
     if (this.availableActions <= 0) {
-      throw new Error('Invalid move: No remaining actions');
+      throw new Error('Invalid cure: No remaining actions');
     } if (!this._validateCure(this.agent, disease, this.getLocation(), cards)) {
       throw new Error(`Invalid cure: ${this.agent.name} cannot cure disease from ${this.getLocation().name}`);
     } else {
@@ -162,6 +162,14 @@ class Controller {
       this._saveFallback(1);
       this.world.cure(this.agent, disease, cards);
     }
+  }
+
+  giveCard(targetAgent, card) {
+    this._doTrade(this.agent, targetAgent, card);
+  }
+
+  takeCard(targetAgent, card) {
+    this._doTrade(targetAgent, this.agent, card);
   }
 
   switchAgent(targetAgent) {
@@ -201,19 +209,19 @@ class Controller {
   async _doActions(agent, world) {
     this._setupState(world, agent);
     await this.doActions(agent, world);
-    return this.actions;
+    this.lastQIndex = world.getQIndex();
   }
 
   async _cardDraw(agent, world, cards) {
     this._setupState(world, agent);
     await this.cardDraw(agent, cards);
-    return this.actions;
+    this.lastQIndex = world.getQIndex();
   }
 
   async _epidemic(agent, world, location) {
     this._setupState(world, agent);
     this.epidemic(agent, location);
-    return this.actions;
+    this.lastQIndex = world.getQIndex();
   }
 
   async _lose(world, cause) {
@@ -226,6 +234,18 @@ class Controller {
     this.win(cause);
   }
 
+  _doTrade(sourceAgent, targetAgent, card) {
+    if (this.availableActions <= 0) {
+      throw new Error('Invalid trade: No remaining actions');
+    } else if (!this._validTrade(sourceAgent, targetAgent, card)) {
+      throw new Error(`Invalid trade: Cannot trade between ${sourceAgent.name} and ${targetAgent.name} at ${sourceAgent.getLocation().name}`);
+    } else {
+      this.availableActions--;
+      this._saveFallback(1);
+      this.world.trade(sourceAgent, targetAgent, card);
+    }
+  }
+  
   _validMove(sourceCity, targetCity) {
     return Boolean(sourceCity.getConnection(targetCity.name));
   }
@@ -264,6 +284,15 @@ class Controller {
     } else {
       return cards.length >= 5;
     }
+  }
+
+  _validTrade(sourceAgent, targetAgent, card) {
+    const validSource = sourceAgent.hasCard(card.name);
+    const sameLocation = sourceAgent.getLocation().name ===
+          targetAgent.getLocation().name;
+    const validLocation = sourceAgent.type === constants.agents.RESEARCHER ||
+          card.name === sourceAgent.getLocation().name;
+    return validSource && sameLocation && validLocation;
   }
 
   _getLocalDisease(city) {
