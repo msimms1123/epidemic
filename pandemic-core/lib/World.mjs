@@ -1,14 +1,17 @@
 import City from './City';
+import Deck from './Deck';
 import constants from './constants';
 import events from './events';
 
 class World {
 
-  constructor(cities, diseases, eventQ) {
+  constructor(cities, diseases, infectionDeck, playerDeck, eventQ) {
     this.cities = cities || {};
     this.cured = {};
     this.agents = {};
     this.outbreakCount = 0;
+    this.infectionDeck = infectionDeck || new Deck();
+    this.playerDeck = playerDeck || new Deck();
     this.eventQ = eventQ || [];
   }
 
@@ -19,6 +22,16 @@ class World {
 
   addAgent(agent) {
     this.agents[agent.name] = agent;
+    return this;
+  }
+
+  setPlayerDeck(deck) {
+    this.playerDeck = deck;
+    return this;
+  }
+
+  setInfectionDeck(deck) {
+    this.infectionDeck = deck;
     return this;
   }
 
@@ -35,7 +48,7 @@ class World {
       city.connections.map((c) => {
         this.infect(c, disease, outbreakSet);
       });
-    } else {
+    } else if (city.getDiseaseCount(disease) < 3) {
       this.applyEvent(new events.Infect(disease, city));
     }
     return this;
@@ -142,9 +155,24 @@ class World {
     return count;
   }
 
+  getOutbreakCount() {
+    return this.outbreakCount;
+  }
+
+  getQIndex() {
+    return this.eventQ.length;
+  }
+
   applyEvent(event) {
     event.apply(this);
     this.eventQ.push(event);
+  }
+
+  revertEventQ(qIndex) {
+    for (let i=this.eventQ.length; i>qIndex; i--) {
+      let event = this.eventQ.pop();
+      event.invert().apply(this);
+    }
   }
 
   static loadWorld(graphJson) {

@@ -20,16 +20,6 @@ class Game {
     return this;
   }
 
-  setPlayerDeck(deck) {
-    this.playerDeck = deck;
-    return this;
-  }
-
-  setInfectionDeck(deck) {
-    this.infectionDeck = deck;
-    return this;
-  }
-
   setController(controller) {
     this.controller = controller;
     return this;
@@ -43,36 +33,7 @@ class Game {
   }
 
   async doActions(agent) {
-    const actions = await this.controller._getActions(agent, this);
-    this.executeActions(actions);
-  }
-
-  executeActions(actions) {
-    for (let i=0; i<actions.length; i++) {
-      let action = actions[i];
-      switch (action.action) {
-      case actions.MOVE:
-        this.world.doMove(action.agent, action.type, action.sourceCity, action.targetCity);
-        break;
-      case actions.BUILD:
-        this.world.doBuild(action.agent, action.targetCity);
-        break;
-      case actions.TREAT:
-        this.world.doTreat(action.agent, action.targetCity);
-        break;
-      case actions.CURE:
-        this.world.doCure(action.agent, action.disease, action.cards);
-        break;
-      case actions.DISCARD:
-        this.agent.removeCard(action.card.name);
-        break;
-      case actions.EVENT:
-        // TODO: handle events
-        break;
-      default:
-        throw new Error(`Invalid action: Unknown action type "${action.action}"`);
-      }
-    }
+    await this.controller._doActions(agent, this.world);
   }
 
   drawPlayerCards(agent) {
@@ -85,7 +46,7 @@ class Game {
 
   async discard(agent) {
     while (agent.cards.count() > constants.MAX_CARDS) {
-      let actions = await this.controller._discard(agent, this);
+      let actions = await this.controller._discard(agent, this.world);
       this.executeActions(actions);
     }
   }

@@ -4,7 +4,7 @@ class Controller {
 
   // Controller callback methods that must be overriden
 
-  async getActions(agent, world) {
+  async doActions(agent, world) {
     throw new Error('Must implement \'getActions\' method');
   }
 
@@ -27,7 +27,7 @@ class Controller {
   // Information retrieval methods - Call these to get information about the controller state.
 
   getLocation() {
-    return this.location;
+    return this.activeAgent.getLocation();
   }
   
   getAllMoves() {
@@ -40,7 +40,7 @@ class Controller {
   }
 
   getLocalMoves() {
-    return this.location.connections;
+    return this.getLocation().connections;
   }
 
   getDirectFlightMoves() {
@@ -56,7 +56,7 @@ class Controller {
   }
 
   getCharterFlightMoves() {
-    if (this._validCharter(this.agent, this.location)) {
+    if (this._validCharter(this.agent, this.getLocation())) {
       return this.world.getCities();
     } else {
       return [];
@@ -64,15 +64,11 @@ class Controller {
   }
 
   getShuttleMoves() {
-    if (this.location.hasStation() || this.newStations[this.location.name]) {
+    if (this.getLocation().hasStation()) {
       return this.world.getStationCities();
     } else {
       return [];
     }
-  }
-
-  getActions() {
-    return this.actions;
   }
 
   getRemainingActions() {
@@ -83,27 +79,17 @@ class Controller {
     return this.world;
   }
 
-  getGame() {
-    return this.game;
-  }
-
   // Action methods. Call these to add an action to the controller for the current event.
   
   doMove(city) {
     if (this.availableActions <= 0) {
       throw new Error('Invalid move: No remaining actions');
-    } if (!this._validMove(this.location, city)) {
-      throw new Error(`Invalid move: Cannot move from ${this.location.name} to ${city.name}`);
+    } if (!this._validMove(this.getLocation(), city)) {
+      throw new Error(`Invalid move: Cannot move from ${this.getLocation().name} to ${city.name}`);
     } else {
-      this.location = city;
       this.availableActions--;
-      this.actions.push({
-        action: constants.actions.MOVE,
-        type: constants.moves.LOCAL,
-        agent: this.agent,
-        targetCity: city,
-        sourceCity: this.location
-      });
+      this._saveFallback(1);
+      this.world.move(this.activeAgent, constants.moves.LOCAL, this.getLocation(), city);
     }
   }
 
@@ -111,168 +97,124 @@ class Controller {
     if (this.availableActions <= 0) {
       throw new Error('Invalid move: No remaining actions');
     } if (!this._validDirect(this.agent, city)) {
-      throw new Error(`Invalid move: Cannot fly direct from ${this.location.name} to ${city.name}`);
+      throw new Error(`Invalid move: Cannot fly direct from ${this.getLocation().name} to ${city.name}`);
     } else {
-      this.location = city;
       this.availableActions--;
-      this.actions.push({
-        action: constants.actions.MOVE,
-        type: constants.moves.DIRECT,
-        agent: this.agent,
-        targetCity: city,
-        sourceCity: this.location
-      });
+      this._saveFallback(1);
+      this.world.move(this.activeAgent, constants.moves.DIRECT, this.getLocation(), city);
     }
   }
 
   doCharterFlight(city) {
     if (this.availableActions <= 0) {
       throw new Error('Invalid move: No remaining actions');
-    } if (!this._validCharter(this.agent, this.location)) {
-      throw new Error(`Invalid move: Cannot charter flight from ${this.location.name} to ${city.name}`);
+    } if (!this._validCharter(this.agent, this.getLocation())) {
+      throw new Error(`Invalid move: Cannot charter flight from ${this.getLocation().name} to ${city.name}`);
     } else {
-      this.location = city;
       this.availableActions--;
-      this.actions.push({
-        action: constants.actions.MOVE,
-        type: constants.moves.CHARTER,
-        agent: this.agent,
-        targetCity: city,
-        sourceCity: this.location
-      });
+      this._saveFallback(1);
+      this.world.move(this.activeAgent, constants.moves.CHARTER, this.getLocation(), city);
     }
   }
 
   doShuttle(city) {
     if (this.availableActions <= 0) {
       throw new Error('Invalid move: No remaining actions');
-    } if (!this._validCharter(this.agent, this.location)) {
-      throw new Error(`Invalid move: Cannot shuttle from ${this.location.name} to ${city.name}`);
+    } if (!this._validShuttle(this.agent, this.getLocation())) {
+      throw new Error(`Invalid move: Cannot shuttle from ${this.getLocation().name} to ${city.name}`);
     } else {
-      this.location = city;
       this.availableActions--;
-      this.actions.push({
-        action: constants.actions.MOVE,
-        type: constants.moves.SHUTTLE,
-        agent: this.agent,
-        targetCity: city,
-        sourceCity: this.location
-      });
+      this._saveFallback(1);
+      this.world.move(this.activeAgent, constants.moves.SHUTTLE, this.getLocation(), city);
     }
   }
 
   doBuildStation() {
     if (this.availableActions <= 0) {
       throw new Error('Invalid build: No remaining actions');
-    } if (!this._validateBuild(this.agent, this.location)) {
-      throw new Error(`Invalid build: Cannot build station at ${this.location.name}`);
+    } if (!this._validateBuild(this.agent, this.getLocation())) {
+      throw new Error(`Invalid build: Cannot build station at ${this.getLocation().name}`);
     } else {
-      this.newStations[this.location.name] = true;
       this.availableActions--;
-      this.actions.push({
-        action: constants.actions.BUILD,
-        targetCity: this.location,
-        agent: this.agent
-      });
+      this._saveFallback(1);
+      this.world.build(this.activeAgent, this.getLocation());
     }
   }
 
   doTreat(disease) {
-    disease = disease || this._getLocalDisease(this.location);
+    disease = disease || this._getLocalDisease(this.getLocation());
     if (this.availableActions <= 0) {
       throw new Error('Invalid treat: No remaining actions');
     } else {
       this.availableActions--;
-      this.actions.push({
-        action: constants.actions.TREAT,
-        disease: disease,
-        targetCity: this.location,
-        agent: this.agent
-      });
+      this._saveFallback(1);
+      this.world.treat(this.agent, this.getLocation(), disease);
     }
   }
 
-  doDiscoverCure(disease) {
+  doDiscoverCure(disease, cards) {
     if (this.availableActions <= 0) {
       throw new Error('Invalid move: No remaining actions');
-    } if (!this._validCure(this.location, city)) {
-      throw new Error(`Invalid cure: ${this.agent.name} cannot cure disease from ${this.location.name}`);
+    } if (!this._validateCure(this.agent, disease, this.getLocation(), cards)) {
+      throw new Error(`Invalid cure: ${this.agent.name} cannot cure disease from ${this.getLocation().name}`);
     } else {
       this.availableActions--;
-      this.actions.push({
-        action: constants.actions.CURE,
-        agent: this.agent,
-        disease: disease
-      });
+      this._saveFallback(1);
+      this.world.cure(this.agent, disease, cards);
     }
   }
 
   undoAction() {
-    let action = this.actions.pop();
-    if (action) {
-      switch (action.action) {
-        case actions.MOVE:
-          this._undoMove(action);
-          break;
-        case actions.BUILD:
-          this._undoBuild(action);
-          break;
-        case actions.TREAT:
-          this._undoTreat(action);
-          break;
-        case actions.CURE:
-          this._undoCure(action);
-          break;
-        case default:
-          // Do nothing
-      }
+    if (this.fallbackQIndex.length) {
+      let { qIndex, actions } = this.fallbackQIndex.pop();
+      this.world.revertEventQ(qIndex);
+      this.availableActions += actions;
+    } else {
+      throw new Error('No actions remaining to undo!');
     }
-    return action;
   }
 
   // Internal methods. Should not be called
 
-  _setupState(game, agent) {
+  _setupState(world, agent) {
     if (agent) {
       this.agent = agent;
-      this.location = agent.location;
+      this.activeAgent = agent;
       this.availableActions = 4;
     } else {
       this.agent = null;
-      this.location = null;
+      this.activeAgent = null;
       this.availableActions = 0;
     }
-    this.game = game;
-    this.world = game.world;
-    this.actions = [];
-    this.newStations = {};
+    this.world = world;
+    this.fallbackQIndex = [];
   }
   
-  async _getActions(agent, game) {
-    this._setupState(game, agent);
-    await this.getActions(agent, game);
+  async _doActions(agent, world) {
+    this._setupState(world, agent);
+    await this.doActions(agent, world);
     return this.actions;
   }
 
-  async _cardDraw(agent, game, cards) {
-    this._setupState(game, agent);
+  async _cardDraw(agent, world, cards) {
+    this._setupState(world, agent);
     await this.cardDraw(agent, cards);
     return this.actions;
   }
 
-  async _epidemic(agent, game, location) {
-    this._setupState(game, agent);
+  async _epidemic(agent, world, location) {
+    this._setupState(world, agent);
     this.epidemic(agent, location);
     return this.actions;
   }
 
-  async _lose(game, cause) {
-    this._setupState(game);
+  async _lose(world, cause) {
+    this._setupState(world);
     this.lose(cause);
   }
 
-  async _win(game, cause) {
-    this._setupState(game);
+  async _win(world, cause) {
+    this._setupState(world);
     this.win(cause);
   }
 
@@ -289,8 +231,8 @@ class Controller {
   }
 
   _validShuttle(sourceCity, targetCity) {
-    const sourceHasStation = sourceCity.hasStation() || this.newStations[sourceCity.name];
-    const targetHasStation = targetCity.hasStation() || this.newStations[targetCity.name];
+    const sourceHasStation = sourceCity.hasStation();
+    const targetHasStation = targetCity.hasStation();
     return Boolean(sourceHasStation && targetHasStation);
   }
 
@@ -300,21 +242,19 @@ class Controller {
     return Boolean(agentCanBuild);
   }
 
-  _vaildateCure(agent, disease, city) {
-    if (!city.hasStation() && !this.newStations[city.name]) {
+  _vaildateCure(agent, disease, city, cards) {
+    if (!city.hasStation()) {
       return false;
     }
-    let cureCount = 0;
-    for (let i=0; i<agent.cards.count(); i++) {
-      let c = agent.cards.getCardAtIndex(i);
-      if (c.disease === disease) {
-        cureCount++;
+    for (let i=0; i<cards.length; i++) {
+      if (!agent.hasCard(cards[i].name) || cards[i].disease !== disease) {
+        return false;
       }
     }
     if (agent.type === constants.agents.SCIENTIST) {
-      return cureCount >= 4;
+      return cards.length >= 4;
     } else {
-      return cureCount >= 5;
+      return cards.length >= 5;
     }
   }
 
@@ -343,24 +283,12 @@ class Controller {
     }
   }
 
-  _undoMove(action) {
-    this.availableActions++;
-    this.location = action.sourceCity;
+  _saveFallback(actions) {
+    this.fallbackQIndex.push({
+      qIndex: this.world.getQIndex(),
+      actions: actions
+    });
   }
-
-  _undoBuild(action) {
-    this.availableActions++;
-    delete this.newStations[this.location.name];
-  }
-
-  _undoTreat(action) {
-    this.availableActions++;
-  }
-
-  _undoCure(action) {
-    this.availableActions++;
-  }
-
 }
 
 

@@ -31,12 +31,13 @@ tf.test('Create new world', () => {
   world
     .addCity(city1)
     .addCity(city2)
-    .addCity(city3);
+    .addCity(city3)
+    .addCity(city4);
 });
 
 tf.test('Get cities', () => {
   let cities = world.getCities();
-  tf.compare(cities.length, 3);
+  tf.compare(cities.length, 4);
 });
 
 tf.test('Get station cities', () => {
@@ -101,6 +102,38 @@ tf.test('Chain outbreak', () => {
   tf.compare(city4.getDiseaseCount(disease), 0);
   tf.compare(world.getDiseaseCount(disease), 8);
 });
+
+tf.test('Should revert q', () => {
+  let disease = city1.coreDisease;
+  const qIndex = world.getQIndex();
+  tf.compare(city1.getDiseaseCount(disease), 3);
+  tf.compare(city2.getDiseaseCount(disease), 3);
+  tf.compare(city3.getDiseaseCount(disease), 2);
+  tf.compare(city4.getDiseaseCount(disease), 0);
+  tf.compare(world.getDiseaseCount(disease), 8);
+  tf.compare(world.getOutbreakCount(), 3);
+
+  world.infect(city3, disease);
+  world.infect(city3, disease);
+  tf.compare(city1.getDiseaseCount(disease), 3);
+  tf.compare(city2.getDiseaseCount(disease), 3);
+  tf.compare(city3.getDiseaseCount(disease), 3);
+  tf.compare(city4.getDiseaseCount(disease), 1);
+  tf.compare(world.getDiseaseCount(disease), 10);
+  tf.compare(world.getOutbreakCount(), 6);
+
+  world.revertEventQ(qIndex);
+  tf.compare(city1.getDiseaseCount(disease), 3);
+  tf.compare(city2.getDiseaseCount(disease), 3);
+  tf.compare(city3.getDiseaseCount(disease), 2);
+  tf.compare(city4.getDiseaseCount(disease), 0);
+  tf.compare(world.getDiseaseCount(disease), 8);
+  tf.compare(world.getOutbreakCount(), 3);
+  tf.compare(world.getQIndex(), qIndex);
+
+});
+
+
 
 tf.end();
 
