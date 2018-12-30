@@ -164,6 +164,14 @@ class Controller {
     }
   }
 
+  switchAgent(targetAgent) {
+    if (!this.agent.type === constants.agents.DISPATCHER) {
+      throw new Error('Only the dispatcher can switch units');
+    } else {
+      this.activeAgent = targetAgent;
+    }
+  }
+
   undoAction() {
     if (this.fallbackQIndex.length) {
       let { qIndex, actions } = this.fallbackQIndex.pop();
