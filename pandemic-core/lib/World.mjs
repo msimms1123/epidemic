@@ -1,21 +1,19 @@
 import City from './City';
 import constants from './constants';
+import events from './events';
 
 class World {
 
-  constructor(cities, diseases) {
+  constructor(cities, diseases, eventQ) {
     this.cities = cities || {};
-    this.diseases = diseases || {};
-    this.isCured = {};
+    this.cured = {};
     this.agents = {};
     this.outbreakCount = 0;
+    this.eventQ = eventQ || [];
   }
 
   addCity(city) {
     this.cities[city.name] = city;
-    if (!this.diseases[city.coreDisease]) {
-      this.diseases[city.coreDisease] = 0;
-    }
     return this;
   }
 
@@ -28,119 +26,93 @@ class World {
     return this.cities[cityName];
   }
 
-  infect(cityName, disease, outbreakSet) {
-    const city = this.cities[cityName];
-    outbreakSet = outbreakSet || {};
+  infect(city, disease, outbreakSet) {
     disease = disease || city.coreDisease;
-    const isOutbreak = city.infect(disease);
-    if (isOutbreak && !outbreakSet[cityName]) {
-      this.outbreakCount++;
-      outbreakSet[cityName] = true;
+    outbreakSet = outbreakSet || {};
+    if (city.getDiseaseCount(disease) >= 3 && !outbreakSet[city.name]) {
+      this.applyEvent(new events.Outbreak(disease, city));
+      outbreakSet[city.name] = true;
       city.connections.map((c) => {
-        this.infect(c.name, disease, outbreakSet);
+        this.infect(c, disease, outbreakSet);
       });
-    } else if (!isOutbreak) {
-      this._increaseDiseaseCount(disease);
+    } else {
+      this.applyEvent(new events.Infect(disease, city));
     }
     return this;
   }
   
-  doMove(agent, moveType, sourceCity, targetCity) {
-    agent.setLocation(targetCity);
+  move(agent, moveType, sourceCity, targetCity) {
+    this.applyEvent(new events.Move(agent, moveType, sourceCity, targetCity));
     if (moveType === constants.moves.CHARTER) {
-      agent.removeCard(sourceCity.name);
+      this.removeCardFromAgent(sourceCity.name, agent);
     } else if (moveType === constants.moves.DIRECT) {
-      agent.removeCard(targetCity.name);
+      this.removeCardFromAgent(targetCity.name, agent);
     }
     // Medic special clear
     if (agent.type === constants.agents.MEDIC) {
-      for (let disease in this.isCured) {
-        if (this.isCured[disease]) {
-          targetCity.clear(disease);
+      for (let disease in this.cured) {
+        if (this.cured[disease]) {
+          this.clear(targetCity, disease);
         }
       }
     }
     return this;
   }
 
-  doBuild(agent, targetCity) {
-    targetCity.buildStation();
+  build(agent, targetCity) {
+    this.applyEvent(new events.Build(agent, targetCity));
     if (agent.type !== constants.agents.OPERATIONS_EXPERT) {
-      agent.removeCard(targetCity.name);
+      this.removeCardFromAgent(targetCity.name, agent);
     }
     return this;
   }
 
-  doTreat(agent, disease, targetCity) {
-    if (agent.type === constants.agents.MEDIC || this.isCured(disease)) {
-      targetCity.clear(disease);
+  treat(agent, targetCity, disease) {
+    if (agent.type === constants.agents.MEDIC || this.cured[disease]) {
+      this.clear(targetCity, disease);
     } else {
-      targetCity.treat(disease);
+      this.applyEvent(new events.Treat(disease, targetCity));
     }
     return this;
   }
 
-  doCure(agent, disease, cards) {
+  cure(agent, disease, cards) {
     for (let i=0; i<cards.length; i++) {
-      agent.remainingActions(cards.length);
+      this.removeCardFromAgent(cards[i].name, agent);
     }
-    this.createCure(disease);
+    this.applyEvent(new events.Cure(disease));
     return this;
   }
 
-  treat(cityName, disease) {
-    const city = this.cities[cityName];
+  clear(city, disease) {
     disease = disease || city.coreDisease;
-    city.treat(disease);
-    this._decreaseDiseaseCount(disease);
+    const count = city.getDiseaseCount(disease);
+    for (let i=0; i<count; i++) {
+      this.applyEvent(new events.Treat(disease, city));
+    }
     return this;
   }
 
-  clear(cityName, disease) {
-    const city = this.cities[cityName];
-    disease = disease || city.coreDisease;
-    const count = city.clear(disease);
-    this._decreaseDiseaseCount(disease, count);
+  removeCardFromAgent(cardName, agent) {
+    let hand = agent.getHand();
+    let card = hand.getCard(cardName);
+    let index = hand.getCardIndex(cardName);
+    this.applyEvent(new events.Discard(card, hand, index));
     return this;
   }
 
-  buildStation(cityName) {
-    const city = this.cities[cityName];
-    city.buildStation();
+  _cure(disease) {
+    this.cured[disease] = true;
     return this;
   }
 
-  removeStation(cityName) {
-    const city = this.cities[cityName];
-    city.removeStation();
-    return this;
-  }
-
-  createCure(disease) {
-    this.isCured[disease] = disease;
+  _reverseCure(disease) {
+    delete this.cured[disease];
     return this;
   }
 
   isCured(disease) {
-    return this.isCured[disease];
-  }
-  
-  _increaseDiseaseCount(disease, count) {
-    count = count || 1;
-    if (!this.diseases[disease]){
-      this.diseases[disease] = 1;
-    } else {
-      this.diseases[disease]++;
-    }
-  }
-
-  _decreaseDiseaseCount(disease, count) {
-    count = count || 1;
-    if (!this.diseases[disease]){
-      this.diseases[disease] = 0;
-    } else {
-      this.diseases[disease]--;
-    }
+    return this.cured[disease];
   }
 
   getConnections(cityName) {
@@ -162,7 +134,17 @@ class World {
   }
 
   getDiseaseCount(disease) {
-    return this.diseases[disease] || 0;
+    let count = 0;
+    for (let cityName in this.cities) {
+      let city = this.cities[cityName];
+      count += city.getDiseaseCount(disease);
+    }
+    return count;
+  }
+
+  applyEvent(event) {
+    event.apply(this);
+    this.eventQ.push(event);
   }
 
   static loadWorld(graphJson) {

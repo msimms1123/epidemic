@@ -56,6 +56,15 @@ class Deck {
     return this.cardMap[cardName];
   }
 
+  getCardIndex(cardName) {
+    for (let i=0; i<this.cards.length; i++) {
+      if (this.cards[i].name === cardName) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
   removeCard(cardName) {
     let card;
     let cards = [];
@@ -81,6 +90,27 @@ class Deck {
 
   getCardAtIndex(i) {
     return this.cards[i];
+  }
+
+  insertCard(card, index) {
+    if (index >= this.cards.length) {
+      this.addCardTop(card);
+    } else if (index === 0) {
+      this.addCardBottom(card);
+    } else {
+      const newCards = [];
+      for (let i=0; i<this.cards.length; i++) {
+        if (i === index) {
+          newCards.push(card);
+        }
+        newCards.push(this.cards[i]);
+      }
+    }
+  }
+
+  clone() {
+    let newCards = this.cards.slice();
+    return new Deck(newCards);
   }
 }
 

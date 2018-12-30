@@ -29,6 +29,10 @@ class Agent {
   hasCard(cardName) {
     return this.cards.getCard(cardName);
   }
+
+  getHand() {
+    return this.cards;
+  }
 }
 
 export default Agent;

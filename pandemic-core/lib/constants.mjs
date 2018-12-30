@@ -6,10 +6,15 @@ const constants = {
   actions: {
     MOVE: 'move',
     BUILD: 'build',
+    DISMANTLE: 'dismantle',
     TREAT: 'treat',
+    INFECT: 'infect',
     CURE: 'cure',
+    REVERSE_CURE: 'reverse_cure',
     DISCARD: 'discard',
-    EVENT: 'event'
+    INSERT: 'insert',
+    EVENT: 'event',
+    INFECT: 'infect'
   },
   moves: {
     LOCAL: 'local',
