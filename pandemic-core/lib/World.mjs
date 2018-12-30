@@ -201,6 +201,14 @@ class World {
     }
   }
 
+  getRecentEvents(qIndex) {
+    const recentEvents = [];
+    for (let i=qIndex; i<this.eventQ.length; i++) {
+      recentEvents.push(this.eventQ[i]);
+    }
+    return recentEvents;
+  }
+
   static loadWorld(graphJson) {
     const cityNames = Object.keys(graphJson);
     const cities = {};

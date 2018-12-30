@@ -2,6 +2,16 @@ import constants from './constants';
 
 class Controller {
 
+  constructor() {
+    this.agent = null;
+    this.activeAgent = null;
+    this.availableActions = 0;
+    this.world = null;
+    this.fallbackQIndex = [];
+    this.recentEvents = [];
+    this.lastQIndex = 0;
+  }
+
   // Controller callback methods that must be overriden
 
   async doActions(agent, world) {
@@ -77,6 +87,10 @@ class Controller {
 
   getWorld() {
     return this.world;
+  }
+
+  getRecentEvents() {
+    return this.recentEvents;
   }
 
   // Action methods. Call these to add an action to the controller for the current event.
@@ -204,6 +218,7 @@ class Controller {
     }
     this.world = world;
     this.fallbackQIndex = [];
+    this.recentEvents = world.getRecentEvents(this.lastQIndex);
   }
   
   async _doActions(agent, world) {

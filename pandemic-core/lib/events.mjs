@@ -185,7 +185,7 @@ class Insert extends Event {
   }
 
   invert() {
-    return new Insert(this.card, this.deck, this.index);
+    return new Discard(this.card, this.deck, this.index);
   }
 }
 
