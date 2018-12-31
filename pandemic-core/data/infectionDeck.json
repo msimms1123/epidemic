@@ -1,0 +1,338 @@
+{
+    "Bejing": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"red",
+        "quantity":1,
+        "description":null
+    },
+    "Seoul": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"red",
+        "quantity":1,
+        "description":null
+    },
+    "Shanghai": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"red",
+        "quantity":1,
+        "description":null
+    },
+    "Tokyo": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"red",
+        "quantity":1,
+        "description":null
+    },
+    "Hong_Kong": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"red",
+        "quantity":1,
+        "description":null
+    },
+    "Taipei": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"red",
+        "quantity":1,
+        "description":null
+    },
+    "Osaka": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"red",
+        "quantity":1,
+        "description":null
+    },
+    "Bangkok": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"red",
+        "quantity":1,
+        "description":null
+    },
+    "Ho_Chi_Minh_City": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"red",
+        "quantity":1,
+        "description":null
+    },
+    "Manilla": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"red",
+        "quantity":1,
+        "description":null
+    },
+    "Jakarta": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"red",
+        "quantity":1,
+        "description":null
+    },
+    "Sydney": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"red",
+        "quantity":1,
+        "description":null
+    },
+    "Delhi": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"black",
+        "quantity":1,
+        "description":null
+    },
+    "Kolkata": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"black",
+        "quantity":1,
+        "description":null
+    },
+    "Chennai": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"black",
+        "quantity":1,
+        "description":null
+    },
+    "Mumbai": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"black",
+        "quantity":1,
+        "description":null
+    },
+    "Karachi": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"black",
+        "quantity":1,
+        "description":null
+    },
+    "Tehran": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"black",
+        "quantity":1,
+        "description":null
+    },
+    "Baghdad": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"black",
+        "quantity":1,
+        "description":null
+    },
+    "Riyadh": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"black",
+        "quantity":1,
+        "description":null
+    },
+    "Moscow": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"black",
+        "quantity":1,
+        "description":null
+    },
+    "Istanbul": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"black",
+        "quantity":1,
+        "description":null
+    },
+    "Cairo": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"black",
+        "quantity":1,
+        "description":null
+    },
+    "Algiers": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"black",
+        "quantity":1,
+        "description":null
+    },
+    "Khartoum": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"yellow",
+        "quantity":1,
+        "description":null
+    },
+    "Lagos": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"yellow",
+        "quantity":1,
+        "description":null
+    },
+    "Kinshasa": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"yellow",
+        "quantity":1,
+        "description":null
+    },
+    "Johannesburg": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"yellow",
+        "quantity":1,
+        "description":null
+    },
+    "Sao_Paulo": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"yellow",
+        "quantity":1,
+        "description":null
+    },
+    "Buenos_Aires": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"yellow",
+        "quantity":1,
+        "description":null
+    },
+    "Bogota": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"yellow",
+        "quantity":1,
+        "description":null
+    },
+    "Lima": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"yellow",
+        "quantity":1,
+        "description":null
+    },
+    "Santiago": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"yellow",
+        "quantity":1,
+        "description":null
+    },
+    "Miami": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"yellow",
+        "quantity":1,
+        "description":null
+    },
+    "Mexico_City": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"yellow",
+        "quantity":1,
+        "description":null
+    },
+    "Los_Angeles": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"yellow",
+        "quantity":1,
+        "description":null
+    },
+    "San_Francisco": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"blue",
+        "quantity":1,
+        "description":null
+    },
+    "Chicago": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"blue",
+        "quantity":1,
+        "description":null
+    },
+    "Atlanta": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"blue",
+        "quantity":1,
+        "description":null
+    },
+    "Montreal": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"blue",
+        "quantity":1,
+        "description":null
+    },
+    "Washington": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"blue",
+        "quantity":1,
+        "description":null
+    },
+    "New_York": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"blue",
+        "quantity":1,
+        "description":null
+    },
+    "London": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"blue",
+        "quantity":1,
+        "description":null
+    },
+    "Madrid": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"blue",
+        "quantity":1,
+        "description":null
+    },
+    "Essen": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"blue",
+        "quantity":1,
+        "description":null
+    },
+    "Paris": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"blue",
+        "quantity":1,
+        "description":null
+    },
+    "Milan": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"blue",
+        "quantity":1,
+        "description":null
+    },
+    "St_Petersburg": {
+        "deck":"infection",
+        "type":"city",
+        "disease":"blue",
+        "quantity":1,
+        "description":null
+    }
+}

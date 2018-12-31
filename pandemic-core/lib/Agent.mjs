@@ -1,4 +1,5 @@
 import Deck from './Deck';
+import constants from './constants.mjs';
 
 class Agent {
 
@@ -34,5 +35,7 @@ class Agent {
     return this.cards;
   }
 }
+
+
 
 export default Agent;

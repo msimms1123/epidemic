@@ -50,6 +50,7 @@ class World {
     outbreakSet = outbreakSet || {};
     if (city.getDiseaseCount(disease) >= 3 && !outbreakSet[city.name]) {
       this.applyEvent(new events.Outbreak(disease, city));
+      console.log('outbreak in ',city.name);
       outbreakSet[city.name] = true;
       city.connections.map((c) => {
         this._infect(c, disease, outbreakSet);
@@ -68,6 +69,7 @@ class World {
     const infectionCount = this.getInfectionRate();
     for (let i=0; i<infectionCount; i++) {
       let targetCard = this.infectionDeck.drawCardTop();
+      console.log('Drew infect card ', targetCard.name);
       this.saveEvent(new events.Discard(targetCard, this.infectionDeck, this.infectionDeck.count()));
       this.applyEvent(new events.Insert(targetCard, this.infectionDiscard, this.infectionDiscard.count()));
       const targetCity = this.getCity(targetCard.name);
@@ -224,6 +226,11 @@ class World {
     }
   }
 
+  _removeFromPlayerDeck(card) {
+    const index = this.playerDeck.getCardIndex(card.name);
+    this.applyEvent(new events.Discard(card, this.playerDeck, index));
+  }
+
   isCured(disease) {
     return this.cured[disease];
   }
@@ -316,30 +323,66 @@ class World {
     return recentEvents;
   }
 
-  static loadWorld(graphJson) {
+  static loadWorld(graphJson, playerCardJson, infectionCardJson) {
+    const cities = World.buildCities(graphJson);
+    const playerDeck = World.buildDeckFromCards(playerCardJson);
+    const infectionDeck = World.buildDeckFromCards(infectionCardJson);
+    playerDeck.shuffle();
+    infectionDeck.shuffle();
+    const world = new World(cities, infectionDeck, playerDeck);
+    return world;
+  }
+
+  static buildCities(graphJson) {
     const cityNames = Object.keys(graphJson);
     const cities = {};
-    const diseases = {};
     for (let i=0; i<cityNames.length; i++) {
-      let cityName = cityName[i];
+      let cityName = cityNames[i];
       let disease = graphJson[cityName].disease;
       let city = new City(cityNames[i], disease);
-      cities[cityNames] = city;
-      if (diseases[disease] === undefined) {
-        diseases[disease] = 0;
-      }
+      cities[cityName] = city;
     }
     for (let i=0; i<cityNames.length; i++) {
       let cityName = cityNames[i];
       let city = cities[cityName];
-      let connections = graphJson[cityName];
+      let connections = graphJson[cityName].connections;
       for (let j=0; j<connections.length; j++) {
-        let c = cities[cityName];
+        let c = cities[connections[j]];
         city.addConnection(c);
       }
     }
-    const world = new World(cities);
-    return world;
+    return cities;
+  }
+
+  static buildDeckFromCards(cardsJson) {
+    const d = new Deck();
+    for (let cardName in cardsJson) {
+      let cardData = cardsJson[cardName];
+      let cardType = constants.cards.LOCATION;
+      if (cardData.type === 'epidemic') {
+        cardType = constants.cards.EPIDEMIC;
+      } else if (cardData.type === 'event') {
+        cardType = constants.cards.EVENT;
+      }
+      if (cardData.quantity > 1) {
+        for (let i=0; i<cardData.quantity; i++) {
+          d.addCard({
+            name: `${cardName}_${i}`,
+            disease: cardData.disease,
+            description: cardData.description,
+            type: cardType
+          });
+        }
+      } else {
+        d.addCard({
+          name: cardName,
+          disease: cardData.disease,
+          description: cardData.description,
+          type: cardType
+        });
+      }
+    }
+    return d;
   }
 }
 

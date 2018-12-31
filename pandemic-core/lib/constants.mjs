@@ -44,7 +44,13 @@ const constants = {
   },
   win_conditions: {
     ALL_CURES: 'all_cures'
-  }
+  },
+  starting_card_count: {
+    2: 4,
+    3: 3,
+    4: 2
+  },
+  start_location: 'Atlanta'
 };
 
 export default constants;

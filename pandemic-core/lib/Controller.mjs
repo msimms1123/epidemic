@@ -34,10 +34,18 @@ class Controller {
     throw new Error('Must implement \'win\' method');
   }
 
+  async discard(agent) {
+    throw new Error('Must implement \'discard\' method');
+  }
+
   // Information retrieval methods - Call these to get information about the controller state.
 
   getLocation() {
     return this.activeAgent.getLocation();
+  }
+
+  getCards() {
+    return this.agent.getHand().toArray();
   }
   
   getAllMoves() {
@@ -186,6 +194,14 @@ class Controller {
     this._doTrade(targetAgent, this.agent, card);
   }
 
+  doDiscard(card) {
+    if (!this.agent.hasCard(card.name)) {
+      throw new Error(`Invalid discard: User does not have card ${card.name}`);
+    } else {
+      this.world.removeCardFromAgent(card.name, this.agent);
+    }
+  }
+
   switchAgent(targetAgent) {
     if (!this.agent.type === constants.agents.DISPATCHER) {
       throw new Error('Only the dispatcher can switch units');
@@ -206,23 +222,22 @@ class Controller {
 
   // Internal methods. Should not be called
 
-  _setupState(world, agent) {
+  _setupState(world, agent, availableActions) {
     if (agent) {
       this.agent = agent;
       this.activeAgent = agent;
-      this.availableActions = 4;
     } else {
       this.agent = null;
       this.activeAgent = null;
-      this.availableActions = 0;
     }
+    this.availableActions = availableActions || 0;
     this.world = world;
     this.fallbackQIndex = [];
     this.recentEvents = world.getRecentEvents(this.lastQIndex);
   }
   
   async _doActions(agent, world) {
-    this._setupState(world, agent);
+    this._setupState(world, agent, 4);
     await this.doActions(agent, world);
     this.lastQIndex = world.getQIndex();
   }
@@ -235,18 +250,24 @@ class Controller {
 
   async _epidemic(agent, world, location) {
     this._setupState(world, agent);
-    this.epidemic(agent, location);
+    await this.epidemic(agent, location);
+    this.lastQIndex = world.getQIndex();
+  }
+
+  async _discard(agent, world) {
+    this._setupState(world, agent);
+    await this.discard(agent);
     this.lastQIndex = world.getQIndex();
   }
 
   async _lose(world, cause) {
     this._setupState(world);
-    this.lose(cause);
+    await this.lose(cause, world);
   }
 
   async _win(world, cause) {
     this._setupState(world);
-    this.win(cause);
+    await this.win(cause, world);
   }
 
   _doTrade(sourceAgent, targetAgent, card) {

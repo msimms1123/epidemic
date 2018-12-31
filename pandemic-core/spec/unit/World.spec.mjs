@@ -3,6 +3,13 @@ import Agent from '../../lib/City.mjs';
 import World from '../../lib/World.mjs';
 import TF from '../testframe.mjs';
 
+import * as cityJsonData from '../../data/cityGraph.json';
+import * as playerCardJsonData from '../../data/playerDeck.json';
+import * as infectionCardJSONData from '../../data/infectionDeck.json';
+const cityJson = cityJsonData.default;
+const playerCardJson = playerCardJsonData.default;
+const infectionCardJSON = infectionCardJSONData.default;
+
 const tf = new TF('World Test');
 
 let city1, city2, city3, city4, world;
@@ -133,7 +140,41 @@ tf.test('Should revert q', () => {
 
 });
 
+tf.test('Should create a city map from an imported json', () => {
+  const cities = World.buildCities(cityJson);
+  //console.log(cities);
 
+  const atlanta = cities['Atlanta'];
+  tf.ok(atlanta);
+  tf.compare(atlanta.coreDisease, 'blue');
+  tf.ok(atlanta.getConnection('Chicago'));
+  tf.ok(atlanta.getConnection('Miami'));
+  tf.ok(atlanta.getConnection('Washington'));
+  
+  tf.ok( ! atlanta.getConnection('Hong_Kong'));
+  tf.ok( ! atlanta.getConnection('fake'));
+
+  const hongKong = cities['Hong_Kong'];
+  tf.ok(hongKong);
+  tf.compare(hongKong.coreDisease, 'red');
+  tf.ok(hongKong.getConnection("Shanghai"));
+  tf.ok(hongKong.getConnection("Taipei"));
+  tf.ok(hongKong.getConnection("Kolkata"));
+  tf.ok(hongKong.getConnection("Bangkok"));
+  tf.ok(hongKong.getConnection("Ho_Chi_Minh_City"));
+  tf.ok(hongKong.getConnection("Manila"));
+
+  tf.ok( ! hongKong.getConnection('Atlanta'));
+  tf.ok( ! hongKong.getConnection('fake'));
+});
+
+tf.test('Should create a player deck from an imported json', () => {
+  const cards = World.buildDeckFromCards(playerCardJson);
+  let hkCard = cards.getCard('Hong_Kong');
+  tf.ok(hkCard);
+  tf.compare(hkCard.disease, 'red');
+  tf.compare(hkCard.type, 'location');
+});
 
 tf.end();
 

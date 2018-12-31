@@ -33,7 +33,7 @@ class Deck {
   }
 
   draw() {
-    return this.drawTop();
+    return this.drawCardTop();
   }
 
   drawCardTop() {
@@ -77,7 +77,7 @@ class Deck {
         card = this.cards[i];
         delete this.cardMap[cardName];
       } else {
-        cards.push(card);
+        cards.push(this.cards[i]);
       }
     }
     this.cards = cards;
@@ -110,6 +110,10 @@ class Deck {
         newCards.push(this.cards[i]);
       }
     }
+  }
+
+  toArray() {
+    return this.cards.slice();
   }
 
   clone() {
