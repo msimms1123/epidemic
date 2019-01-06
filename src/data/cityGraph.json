@@ -90,8 +90,9 @@
     "Sydney": {
         "disease":"red",
         "location": {
-            "x":93,
-            "y":77
+            "x":91,
+            "y":74
+
         },
         "connections": ["Los_Angeles", "Manila", "Jakarta"]        
     },
