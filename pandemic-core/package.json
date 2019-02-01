@@ -1,0 +1,13 @@
+{
+  "name": "pandemic-core",
+  "version": "0.1.0",
+  "description": "The core model and game engine for pandemic",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "ls spec/unit/* | xargs -I % node --experimental-modules %"
+  },
+  "author": "Brian Simms"
+}
