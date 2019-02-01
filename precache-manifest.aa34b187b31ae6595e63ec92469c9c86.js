@@ -4,12 +4,12 @@ self.__precacheManifest = [
     "url": "/epidemic/static/media/contingency.cddd0653.png"
   },
   {
-    "revision": "b6dae391a071064eab1a",
+    "revision": "399aba980eccd3b5a9de",
     "url": "/epidemic/static/css/main.f4169998.chunk.css"
   },
   {
-    "revision": "fa9ebe0057800cfdd8ab",
-    "url": "/epidemic/static/js/1.fa9ebe00.chunk.js"
+    "revision": "0cfe5ea36cf463805cbf",
+    "url": "/epidemic/static/js/1.0cfe5ea3.chunk.js"
   },
   {
     "revision": "d39b8bb1c9a30bfbf8a9",
@@ -32,8 +32,8 @@ self.__precacheManifest = [
     "url": "/epidemic/static/media/operations.0123b344.png"
   },
   {
-    "revision": "b6dae391a071064eab1a",
-    "url": "/epidemic/static/js/main.b6dae391.chunk.js"
+    "revision": "399aba980eccd3b5a9de",
+    "url": "/epidemic/static/js/main.399aba98.chunk.js"
   },
   {
     "revision": "05c95004ac27af298044cf07b68397e2",
@@ -60,7 +60,7 @@ self.__precacheManifest = [
     "url": "/epidemic/static/media/Simple_world_map.e4492b1a.svg"
   },
   {
-    "revision": "2274fdd0c2bbb3af26182aa56d8078da",
+    "revision": "83a5fadf7c62053a6b62976b4ccdcdf1",
     "url": "/epidemic/index.html"
   }
 ];

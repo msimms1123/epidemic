@@ -1,9 +1,9 @@
 {
   "main.css": "/epidemic/static/css/main.f4169998.chunk.css",
-  "main.js": "/epidemic/static/js/main.b6dae391.chunk.js",
-  "main.js.map": "/epidemic/static/js/main.b6dae391.chunk.js.map",
-  "static/js/1.fa9ebe00.chunk.js": "/epidemic/static/js/1.fa9ebe00.chunk.js",
-  "static/js/1.fa9ebe00.chunk.js.map": "/epidemic/static/js/1.fa9ebe00.chunk.js.map",
+  "main.js": "/epidemic/static/js/main.399aba98.chunk.js",
+  "main.js.map": "/epidemic/static/js/main.399aba98.chunk.js.map",
+  "static/js/1.0cfe5ea3.chunk.js": "/epidemic/static/js/1.0cfe5ea3.chunk.js",
+  "static/js/1.0cfe5ea3.chunk.js.map": "/epidemic/static/js/1.0cfe5ea3.chunk.js.map",
   "runtime~main.js": "/epidemic/static/js/runtime~main.d39b8bb1.js",
   "runtime~main.js.map": "/epidemic/static/js/runtime~main.d39b8bb1.js.map",
   "static/media/dif-easy.png": "/epidemic/static/media/dif-easy.77493761.png",
@@ -19,6 +19,6 @@
   "static/media/dif-medium.png": "/epidemic/static/media/dif-medium.f76bd7ed.png",
   "static/css/main.f4169998.chunk.css.map": "/epidemic/static/css/main.f4169998.chunk.css.map",
   "index.html": "/epidemic/index.html",
-  "precache-manifest.9dc09af80fab98b582e20b05471224e7.js": "/epidemic/precache-manifest.9dc09af80fab98b582e20b05471224e7.js",
+  "precache-manifest.aa34b187b31ae6595e63ec92469c9c86.js": "/epidemic/precache-manifest.aa34b187b31ae6595e63ec92469c9c86.js",
   "service-worker.js": "/epidemic/service-worker.js"
 }
