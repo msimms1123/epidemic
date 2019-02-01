@@ -60,7 +60,7 @@ self.__precacheManifest = [
     "url": "/epidemic/static/media/Simple_world_map.e4492b1a.svg"
   },
   {
-    "revision": "d5613da21f9b4b6f1f68d854e3572a90",
+    "revision": "4d4e5447ee00a4233063b6504d5b5c4b",
     "url": "/epidemic/index.html"
   }
 ];
