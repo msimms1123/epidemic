@@ -4,7 +4,7 @@ self.__precacheManifest = [
     "url": "/epidemic/static/media/contingency.cddd0653.png"
   },
   {
-    "revision": "52b7dac8899f6c840762",
+    "revision": "2ca3e4010b2274ad4104",
     "url": "/epidemic/static/css/main.30ada5a3.chunk.css"
   },
   {
@@ -32,8 +32,8 @@ self.__precacheManifest = [
     "url": "/epidemic/static/media/operations.0123b344.png"
   },
   {
-    "revision": "52b7dac8899f6c840762",
-    "url": "/epidemic/static/js/main.52b7dac8.chunk.js"
+    "revision": "2ca3e4010b2274ad4104",
+    "url": "/epidemic/static/js/main.2ca3e401.chunk.js"
   },
   {
     "revision": "05c95004ac27af298044cf07b68397e2",
@@ -60,7 +60,7 @@ self.__precacheManifest = [
     "url": "/epidemic/static/media/Simple_world_map.e4492b1a.svg"
   },
   {
-    "revision": "7513b86c7197cab11080389c0b402059",
+    "revision": "7384c1d5605ad2e643ead42ed7ba3aaf",
     "url": "/epidemic/index.html"
   }
 ];
