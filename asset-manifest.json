@@ -1,7 +1,7 @@
 {
-  "main.css": "/epidemic/static/css/main.29c8e9d9.chunk.css",
-  "main.js": "/epidemic/static/js/main.932b50a2.chunk.js",
-  "main.js.map": "/epidemic/static/js/main.932b50a2.chunk.js.map",
+  "main.css": "/epidemic/static/css/main.30ada5a3.chunk.css",
+  "main.js": "/epidemic/static/js/main.52b7dac8.chunk.js",
+  "main.js.map": "/epidemic/static/js/main.52b7dac8.chunk.js.map",
   "static/js/1.0cfe5ea3.chunk.js": "/epidemic/static/js/1.0cfe5ea3.chunk.js",
   "static/js/1.0cfe5ea3.chunk.js.map": "/epidemic/static/js/1.0cfe5ea3.chunk.js.map",
   "runtime~main.js": "/epidemic/static/js/runtime~main.d39b8bb1.js",
@@ -17,8 +17,8 @@
   "static/media/dispatcher.png": "/epidemic/static/media/dispatcher.ae1038f0.png",
   "static/media/App.css": "/epidemic/static/media/Simple_world_map.e4492b1a.svg",
   "static/media/dif-medium.png": "/epidemic/static/media/dif-medium.f76bd7ed.png",
-  "static/css/main.29c8e9d9.chunk.css.map": "/epidemic/static/css/main.29c8e9d9.chunk.css.map",
+  "static/css/main.30ada5a3.chunk.css.map": "/epidemic/static/css/main.30ada5a3.chunk.css.map",
   "index.html": "/epidemic/index.html",
-  "precache-manifest.3980d906e6fb60e202f30b48b6aae18f.js": "/epidemic/precache-manifest.3980d906e6fb60e202f30b48b6aae18f.js",
+  "precache-manifest.aed1536f331b82f610ce57ed92a75395.js": "/epidemic/precache-manifest.aed1536f331b82f610ce57ed92a75395.js",
   "service-worker.js": "/epidemic/service-worker.js"
 }
