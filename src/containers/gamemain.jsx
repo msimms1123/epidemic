@@ -6,6 +6,7 @@ import api from '../pandemic-core/index';
 import EmptyController from '../test.mjs'
 import Draw from '../components/Draw'
 import Epidemic from '../components/Epidemic'
+import Lose from '../components/Lose'
 import CardSelection from './CardSelection'
 
 class GameMain extends React.Component {
@@ -14,7 +15,8 @@ class GameMain extends React.Component {
         this.state = {
             model: null,
             controller:null,
-            phase:null
+            phase:null,
+            history:null
         }
         this.saveState = this.saveState.bind(this);
         this.setPhase = this.setPhase.bind(this);
@@ -22,10 +24,11 @@ class GameMain extends React.Component {
     }
     componentDidMount(){
         let {initialConditions} = this.props;
+        let history = (this.props.rout.history)
         let numPlayers = initialConditions? initialConditions.numPlayers : 3;
         let controller = new EmptyController(this.saveState, this.setPhase)
         const game = api.Game.getStandardGame(numPlayers, controller);
-        this.setState({model:game, controller:controller, phase:null});
+        this.setState({model:game, controller:controller, phase:null, history});
         game.play();
 
     }
@@ -48,6 +51,13 @@ class GameMain extends React.Component {
         let {phase} = this.state;
         if(phase){
             switch(phase.show){
+                case 'win':
+                    return <Lose cause={phase.info} history={this.state.history}/>
+                
+                break;
+                case 'lose':                        
+                    return <Lose cause={phase.info} history={this.state.history}/>
+                break;
                 case 'move':
                     return '';
                 break;
@@ -58,8 +68,6 @@ class GameMain extends React.Component {
                 return <Draw phase={phase}/>
                 break;
                 case 'discard':
-                
-                console.log(phase)
                     let selection = {
                         cards: phase.agent.cards.cards,
                         callback: this.discardCallback,

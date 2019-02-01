@@ -64,11 +64,23 @@ class EmptyController extends Controller {
         console.log(`Outbreak occured at ${e.targetCity.name}`);
       }
     } 
-    throw new Error('Must implement \'lose\' method');
+    
+    
+    await new Promise((resolve, reject) => {
+      this.setPhase('lose', resolve, null, this, cause)
+    }).then(()=>{
+      this.setPhase(null);
+    });
+    this.savestate(this);
   }
 
   async win(cause, world) {
-    throw new Error('Must implement \'win\' method');
+    await new Promise((resolve, reject) => {
+      this.setPhase('win', resolve, null,  this, cause)
+    }).then(()=>{
+      this.setPhase(null);
+    });
+    this.savestate(this);
   }
 }
 

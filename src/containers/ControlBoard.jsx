@@ -172,7 +172,7 @@ export default class ControlBoard extends React.Component{
         let {moves,alert, showMoveOptions, showShares} = this.state; 
         let {setSelection, phase, controller, model} = this.props;
         let submitClass = classnames('play-moves', {ready: moves.length===4 && phase && phase.show==='move'})         
-        let moveOptions = this.getMoveOptions(controller.getAllMoves());
+        let moveOptions = phase.agent? this.getMoveOptions(controller.getAllMoves()):[];
         console.log(phase)
         let tradeOptions =phase.agent? this.getTradeOptions(phase.agent, model):[];
 
